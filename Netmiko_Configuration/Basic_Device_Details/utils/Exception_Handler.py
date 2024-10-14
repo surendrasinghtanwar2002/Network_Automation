@@ -27,6 +27,8 @@ def Netmiko_Exception_Handler(func):
             print(f"Paramiko Authentication Exception occurred in {func.__name__}: {auth_error}")
         except SSHException:
             print(f"SSH Exception occurred due to network issues in {func.__name__}")
+        except AttributeError as attrerrror:
+            print(f"Attribute Exception occured in the {attrerrror} function in {func.__name__}")
         except Exception as e:
             print(f"An unexpected error occurred in {func.__name__}: {e}")
         return None
@@ -59,7 +61,10 @@ def Regular_Exception_Handler(func):
             print(f"FileExistsError occurred in {func.__name__}: {file_error}")
         except OSError as os_error:
             print(f"OSError occurred in {func.__name__}: {os_error}")
+        except AttributeError as attrerrror:
+            print(f"Attribute Exception occured in the {attrerrror} function in {func.__name__}")
         except Exception as e:
             print(f"An unexpected error occurred in {func.__name__}: {e}")
         return None
+
     return wrapper

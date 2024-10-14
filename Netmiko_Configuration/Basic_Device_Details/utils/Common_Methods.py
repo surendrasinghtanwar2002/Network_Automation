@@ -1,6 +1,7 @@
 from netmiko import ConnectHandler
-from utils.Exception_Handler import Netmiko_Exception_Handler
+from utils.Exception_Handler import Netmiko_Exception_Handler,Regular_Exception_Handler
 
+@Regular_Exception_Handler
 def send_command(sessions: object | list, commands: str | list) -> str:
     """
     Function to send commands to one or more network sessions.
