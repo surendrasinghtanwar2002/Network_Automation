@@ -1,3 +1,4 @@
+from netmiko import ConnectHandler
 from utils.Exception_Handler import Netmiko_Exception_Handler
 import sys
 
@@ -9,10 +10,6 @@ device_details = {
 	'device_type' : "cisco_ios"
 }
 ## Function for making the connection
-@Netmiko_Exception_Handler
-def connection(details)->object:
-	session = ConnectHandler(**details)
-	
 
 ##Send Command Function
 @Netmiko_Exception_Handler
