@@ -9,15 +9,14 @@ device_details = {
 	"password":"hackerzone"
 }
 
+##Configuration details of the device
+commands_list = ["show clock","show ip interface brief","show run"]
+
 def main():
 	print("Calling the main function here")
 	netmiko_session = connection_establishement(device_details)
-	output = send_command(netmiko_session,"show run")
-
-	## Write the output from the send command
-	with open("Backup",'w') as file:
-		file.write(output)
-		print("Your file have been created")
+	output = send_command(netmiko_session,commands_list)
+	print(output) 
 
 if __name__ == "__main__":
 	main()
