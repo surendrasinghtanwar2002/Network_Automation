@@ -52,22 +52,18 @@ def send_config_command(sessions: object | list, commands: str | list) -> str:
     final_output = ""  # This will store the entire final output in string format
 
     # Normalize sessions to be a list
-    if isinstance(sessions, object):
+    if not isinstance (sessions, list):
         sessions = [sessions]  # Wrap single session in a list
 
-    if not isinstance(sessions, list) or not all(isinstance(session, object) for session in sessions):
-        return "Invalid session objects provided."
+    if not isinstance(commands,list):
+        commands = [commands]  # Wrap single command in a list
 
-    if isinstance(commands, str) or isinstance(commands,list):
-        # Sending a single command to all sessions
-        for session in sessions:
-            try:
-                output = session.send_config_set(commands)
-                final_output += f"Output for command {commands} {output}"
-            except Exception as e:
-                final_output += f"Error sending command '{commands}' on {session.host}: {e}\n"
-    else:
-        return "You have not provided valid command details. Please try again."
+    for session in sessions:
+        try:
+            output = session.send_config_set(commands)
+            final_output += f"Output for command {commands} {output}"
+        except Exception as e:
+            final_output += f"Error sending command '{commands}' on {session.host}: {e}\n"
     
     return final_output
 
