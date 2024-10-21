@@ -79,21 +79,43 @@ def device_details_generator():
 					})
 		return device_details
 	except Exception as e:
-		print(f"Common Exception occured in {__name__}")
+		print(f"Common Exception occured in {__name__,e}")
 
-def create_vlan(session:object)->Any:
-	'''
-	Function to create the vlan
-	'''
-	try:
-		vlan_details = session.send_command('show vlan',use_textfsm=True)
-		current_vlan_details = {} ##Contain the current vlan details
-		for vlan in vlan_details:
-			current_vlan_details[vlan['vlan_id']] = vlan['vlan_name']
+def create_vlan(session: object, vlans: dict) -> Any:
+    '''
+    Function to create VLANs on the network device.
+    
+    Args:
+        session: The Netmiko or similar session object to interact with the device.
+        vlans: A dictionary where the key is the VLAN ID and the value is the VLAN name to create or modify.
+    '''
+    try:
+        vlan_details = session.send_command('show vlan', use_textfsm=True)
+        
+        current_vlan_details = {}  # This will store the current VLAN ID and name pairs
+        for vlan in vlan_details:
+            current_vlan_details[vlan['vlan_id']] = vlan['vlan_name']
+        
+    
+        for k, v in vlans.items():
+            # Check if the VLAN exists and if the name is different
+            if k in current_vlan_details and v != current_vlan_details[k]:
+                commands = [f"vlan {k}", f"name {v}"]
+                output = session.send_config_set(commands)
+                print(f"VLAN {k} updated to {v}")
 
+            elif k not in current_vlan_details:
+                # Create the VLAN if it doesn't exist
+                commands = [f"vlan {k}", f"name {v}"]
+                output = session.send_config_set(commands)
+                print(f"VLAN {k} created with name {v}")
+        
+        # Disconnect the session after completing the operations
+        session.disconnect()
 
-	except Exception as e:
-		print(f"Common Exception occured in {__name__}")
+    except Exception as e:
+        print(f"An exception occurred in {__name__}: {e}")
+
 
 def device_mode(session:object)->Any:
 	''' Function to check device in config mode or not and switch to the config mode '''
