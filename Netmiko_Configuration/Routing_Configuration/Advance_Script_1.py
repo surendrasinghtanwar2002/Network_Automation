@@ -1,6 +1,6 @@
 from netmiko import ConnectHandler,NetmikoAuthenticationException,NetmikoTimeoutException,NetmikoBaseException
 from concurrent.futures import ThreadPoolExecutor,BrokenExecutor,TimeoutError,CancelledError
-from typing import AnyStr,List,Tuple
+from typing import List,Tuple
 from getpass import getpass
 from sys import exit
 import functools
@@ -37,8 +37,8 @@ device_details = [
 
 ##baseline ntp
 baseline_ntp = [
-    "ntp server 192.168.100.1",
-    "ntp server 192.168.100.2"
+    "ntp server 192.168.100.100",
+    "ntp server 192.168.102.500"
 ]
 
 def common_exception_handler(func):
@@ -140,6 +140,7 @@ def user_auth() -> Tuple:
     c_starter = 0
     c_end = 3
     while c_starter < c_end:
+        clear_screen()              
         username = input("Enter Username:- ").strip()
         password = getpass(prompt="Enter Password:- ").strip()
         if username and password:
@@ -149,6 +150,15 @@ def user_auth() -> Tuple:
             c_starter += 1
     exit(" Limit Exceed Closing the connection ".center(shutil.get_terminal_size().columns, "!"))
 
+@common_exception_handler
+def backup_device(session)->bool:
+    '''
+    Backup the device before any execution
+    '''
+    output = session.send_command('show running-config')
+    with open(f"Device{session.host}.txt","w+") as f:
+        f.write(output)
+        return True
 
 @common_exception_handler
 def initialize_device_session(device) -> object:
@@ -168,27 +178,32 @@ def initialize_device_session(device) -> object:
     if not netmiko_session:
         return False
 
-    output = netmiko_session.send_command("show running-config | include ntp")
-    missing_ntp_servers = [line for line in baseline_ntp if line not in output]
+    result = backup_device(session=netmiko_session)                ##backup device
+    if result:
+        output = netmiko_session.send_command("show running-config | include ntp")
+        missing_ntp_servers = [line for line in baseline_ntp if line not in output]
 
-    if missing_ntp_servers:
-        print(f"Missing NTP servers: {', '.join(missing_ntp_servers)}".center(shutil.get_terminal_size().columns, "!"))
+        if missing_ntp_servers:
+            print(f" Missing NTP servers configuration on {netmiko_session.host}".center(shutil.get_terminal_size().columns, "!"))
 
-        if not netmiko_session.check_enable_mode():
-            print("We are not in enable mode. Switching to enable mode.")
-            netmiko_session.enable()
+            if not netmiko_session.check_enable_mode():
+                # print("We are not in enable mode. Switching to enable mode.")
+                netmiko_session.enable()
 
-        if not netmiko_session.check_config_mode():
-            print("We are not in config mode. Switching to config mode.")
-            netmiko_session.config_mode()
+            if not netmiko_session.check_config_mode():
+                # print("We are not in config mode. Switching to config mode.")
+                netmiko_session.config_mode()
 
-        if netmiko_session.check_enable_mode() and netmiko_session.check_config_mode():
-            print("Executing NTP configuration commands.")
-            results = list(map(lambda item: (item, netmiko_session.send_command(f'ntp server {item}')), missing_ntp_servers))
-            return results
+            if netmiko_session.check_enable_mode() and netmiko_session.check_config_mode():
+                print("Executing NTP configuration commands.")
+                results = list(map(lambda item: (item, netmiko_session.send_command(f'{item}')), missing_ntp_servers))
+                return f"Command Executed succesfully on {netmiko_session.host} and output of device is \n{results}"
+        else:
+            print("No missing NTP Server Configuration")
+            return f"NTP configuration on {netmiko_session.host} is already presented\n{output}"
     else:
-        print("No missing NTP Server Configuration")
-        return True
+        print("Not able to execute the configuration backup is not proceed")
+        return f"Not able to execute the configuration backup is not proceed on {netmiko_session.host}"
 
 
 @common_exception_handler
@@ -208,13 +223,19 @@ def Thread_Executor(devices:List):
         valid_connection = list(filter(lambda x: x != False or x != None, result))       ##Filtering the false object from the list
         return valid_connection
 
+
+
 def main():
        username,password = user_auth()
        device_list = device_detail_generator(user=username,passw=password)  
-       print(f"Device List is there {device_list}")
        result = Thread_Executor(devices=device_list)
-       print(f"This is the valid thread pool executor for the function {result}")
-       
+       with open('report.txt', 'w+') as f:
+    
+        # write elements of list
+        for items in result:
+            f.write('%s\n' %items)
+        
+        print("File written successfully")
 
 if __name__ == "__main__":
     main()

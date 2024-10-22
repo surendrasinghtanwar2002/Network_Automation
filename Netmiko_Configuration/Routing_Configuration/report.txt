@@ -1,0 +1,8 @@
+Command Executed succesfully on 192.168.1.100 and output of device is 
+[('ntp server 192.168.102.500', '% Invalid hostname name')]
+Command Executed succesfully on 192.168.1.105 and output of device is 
+[('ntp server 192.168.102.500', '% Invalid hostname name')]
+Command Executed succesfully on 192.168.1.110 and output of device is 
+[('ntp server 192.168.102.500', '% Invalid hostname name')]
+Command Executed succesfully on 192.168.1.110 and output of device is 
+[('ntp server 192.168.102.500', '% Invalid hostname name')]
