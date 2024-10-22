@@ -16,13 +16,13 @@ device_details = [
         "Device_Role":"Router",
     },
     {
-        "Device Type":"iosxr",
+        "Device Type":"cisco_ios",
         "Device Address":"192.168.1.105",
         "Location":"Data Center",
         "Device_Role":"Router",
     },
     {
-        "Device Type":"iosxr",
+        "Device Type":"cisco_ios",
         "Device Address":"192.168.1.110",
         "Location":"Data Center",
         "Device_Role":"Router",
@@ -34,6 +34,12 @@ device_details = [
         "Device_Role":"Switch",
     }
     ]
+
+##baseline ntp
+baseline_ntp = [
+    "ntp server 192.168.100.1",
+    "ntp server 192.168.100.2"
+]
 
 def common_exception_handler(func):
     """
@@ -145,7 +151,7 @@ def user_auth() -> Tuple:
 
 
 @common_exception_handler
-def initialize_device_session(device)->object:
+def initialize_device_session(device) -> object:
     """
     Creates a Netmiko session to the specified device.
 
@@ -153,13 +159,37 @@ def initialize_device_session(device)->object:
         device (dict): Device connection details.
 
     Returns:
-        Netmiko.Session or bool: The session object if successful; otherwise, False.
+        list: A list of results for NTP server configurations if successful; otherwise, False.
     """
+    print(f" Connecting to the host {device['ip']} ".center(shutil.get_terminal_size().columns, "!"))
+
+    # Establish a Netmiko session
     netmiko_session = ConnectHandler(**device)
-    if netmiko_session:
-        return netmiko_session
-    else:
+    if not netmiko_session:
         return False
+
+    output = netmiko_session.send_command("show running-config | include ntp")
+    missing_ntp_servers = [line for line in baseline_ntp if line not in output]
+
+    if missing_ntp_servers:
+        print(f"Missing NTP servers: {', '.join(missing_ntp_servers)}".center(shutil.get_terminal_size().columns, "!"))
+
+        if not netmiko_session.check_enable_mode():
+            print("We are not in enable mode. Switching to enable mode.")
+            netmiko_session.enable()
+
+        if not netmiko_session.check_config_mode():
+            print("We are not in config mode. Switching to config mode.")
+            netmiko_session.config_mode()
+
+        if netmiko_session.check_enable_mode() and netmiko_session.check_config_mode():
+            print("Executing NTP configuration commands.")
+            results = list(map(lambda item: (item, netmiko_session.send_command(f'ntp server {item}')), missing_ntp_servers))
+            return results
+    else:
+        print("No missing NTP Server Configuration")
+        return True
+
 
 @common_exception_handler
 def Thread_Executor(devices:List):
@@ -175,7 +205,7 @@ def Thread_Executor(devices:List):
     print("In this we will create multiple thread for the netmiko session")
     with ThreadPoolExecutor(max_workers=5) as executor:
         result = executor.map(initialize_device_session,devices)
-        valid_connection = list(filter(lambda x: x != False, result))       ##Filtering the false object from the list
+        valid_connection = list(filter(lambda x: x != False or x != None, result))       ##Filtering the false object from the list
         return valid_connection
 
 def main():
