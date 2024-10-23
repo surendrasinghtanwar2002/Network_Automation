@@ -223,8 +223,6 @@ def Thread_Executor(devices:List):
         valid_connection = list(filter(lambda x: x != False or x != None, result))       ##Filtering the false object from the list
         return valid_connection
 
-
-
 def main():
        username,password = user_auth()
        device_list = device_detail_generator(user=username,passw=password)  
