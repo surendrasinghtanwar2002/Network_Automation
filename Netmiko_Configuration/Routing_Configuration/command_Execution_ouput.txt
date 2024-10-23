@@ -1,0 +1,12 @@
+ Command Executed on 192.168.1.125 and output is 
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+R5(config)#router eigrp 100
+R5(config-router)#no auto-summary
+R5(config-router)#network 0.0.0.0
+R5(config-router)#exit
+R5(config)#do write
+Building configuration...
+[OK]
+R5(config)#end
+R5#

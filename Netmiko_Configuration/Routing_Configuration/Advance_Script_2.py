@@ -15,13 +15,13 @@ import os
 device_Details = [
     {
         "Device Type": "ios",
-        "Device Address": "192.168.1.100",
+        "Device Address": "192.168.1.125",
         "Region": "Data Center",
         "Device_Role": "Router"
     },
     {
         "Device Type": "ios",
-        "Device Address": "192.168.1.105",
+        "Device Address": "192.168.1.120",
         "Region": "Data Center",
         "Device_Role": "Router"
     },
@@ -39,7 +39,7 @@ device_Details = [
     },
 ]
 
-router_configuration = ["router eigrp 100","no auto-summary","network 0.0.0.0","exit","do write"]
+router_configuration_commands = ["router eigrp 100","no auto-summary","network 0.0.0.0","exit","do write"]
 
 ##All_Text
 all_text = {
@@ -121,39 +121,35 @@ def clearscreen():
 def backup_device(session:object,command="show run"):
     backup_data = session.send_command(command)
     current_datatime = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
-    filename = f"{session.host}//{current_datatime}.txt"
-    with open(filename,"w") as backup:
+    filename = f"Backup {session.host} {current_datatime}.txt"
+    with open(filename,"w+") as backup:
         backup.write(backup_data)
         return True
 
 @exceptionhandler
-def command_output(command_Data:str):
+def command_output_file(command_Data:str):
     with open("command_Execution_ouput.txt","w") as backup:
         backup.write(command_Data)
         return True
 
 @exceptionhandler
-def routing_protocol_configuration(session: object):
-    print("In this we will configure the router")
-    
+def routing_protocol_configuration(session: object):    
     backup_status = backup_device(session)
     
     if backup_status:
         print(f"{all_text['backup_device']} {session.host}")
     else:
         print(f"Backup was not performed for {session.host}. Continuing with configuration...")
-
-    session.config_mode()  
+ 
     
     final_output = " "
-
-    for command in router_configuration:
-        command_output = session.send_command(command)
-        final_output = f"Command Executed on {session.host} and output is \n{command_output}"
+    command_output = session.send_config_set(router_configuration_commands)
+    final_output += f"Command Executed on {session.host} and output is \n{command_output}"
+    command_output_file(final_output)
         
-        if "Error" in command_output:
-            print(f"Error executing command '{command}': {command_output}")
-            return False
+    if "Error" in command_output:
+        print(f"Error executing command '{router_configuration_commands}': {command_output}")
+        return False
 
     print(final_output)
     return True
@@ -179,7 +175,7 @@ def device_send_command(session:object,command="show version")->None:
         matches = re.search(pattern,device_version_output)
         if matches != None:
             print(f"{all_text['device_Router']}:- {session.host} ".center(shutil.get_terminal_size().columns, "^"))
-            command_result = routing_protocol_configuration()
+            command_result = routing_protocol_configuration(session)
             return command_result
             
         else:
@@ -187,9 +183,10 @@ def device_send_command(session:object,command="show version")->None:
             pass
 
 @exceptionhandler
-def device_validator(devices:Dict):
+def device_validator(devices:List):
     print("Device Validation will work here")
-    device_connection_worker()
+    result = device_connection_worker(device_send_command,devices)
+    return result
 
 
 @exceptionhandler
@@ -261,8 +258,9 @@ def main()->None:
     clearscreen()
     username,password = user_Auth()
     device_list = generate_device_info(username,password)
-    result = device_connection_worker(session_intialiser,device_list)
-    print(f"This is the result of the device {result}")
+    devices_session = device_connection_worker(session_intialiser,device_list)
+    result = device_validator(devices_session)
+    print(result)
 
 if __name__ == "__main__":
     main()
