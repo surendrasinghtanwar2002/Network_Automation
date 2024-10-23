@@ -1,4 +1,16 @@
- Command Executed on 192.168.1.125 and output is 
+ Command Executed on 192.168.1.120 and output is:
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+R6(config)#router eigrp 100
+R6(config-router)#no auto-summary
+R6(config-router)#network 0.0.0.0
+R6(config-router)#exit
+R6(config)#do write
+Building configuration...
+[OK]
+R6(config)#end
+R6#
+ Command Executed on 192.168.1.125 and output is:
 configure terminal
 Enter configuration commands, one per line.  End with CNTL/Z.
 R5(config)#router eigrp 100

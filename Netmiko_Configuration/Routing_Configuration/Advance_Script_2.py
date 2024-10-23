@@ -128,7 +128,7 @@ def backup_device(session:object,command="show run"):
 
 @exceptionhandler
 def command_output_file(command_Data:str):
-    with open("command_Execution_ouput.txt","w") as backup:
+    with open("command_Execution_ouput.txt","a") as backup:
         backup.write(command_Data)
         return True
 
@@ -144,7 +144,7 @@ def routing_protocol_configuration(session: object):
     
     final_output = " "
     command_output = session.send_config_set(router_configuration_commands)
-    final_output += f"Command Executed on {session.host} and output is \n{command_output}"
+    final_output += f"Command Executed on {session.host} and output is:\n{command_output}\n"
     command_output_file(final_output)
         
     if "Error" in command_output:
