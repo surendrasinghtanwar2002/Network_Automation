@@ -6,6 +6,7 @@ from getpass import getpass
 from time import sleep
 from sys import exit
 import functools
+import threading
 import logging
 import shutil
 import re
@@ -31,15 +32,18 @@ device_Details = [
         "Region": "Data Center",
         "Device_Role": "Router"
     },
-    {
-        "Device Type": "ios",
-        "Device Address": "192.168.1.115",
-        "Region": "Data Center",
-        "Device_Role": "Router"
-    },
+    # {
+    #     "Device Type": "ios",
+    #     "Device Address": "192.168.1.115",
+    #     "Region": "Data Center",
+    #     "Device_Role": "Router"
+    # },
 ]
 
-router_configuration_commands = ["router eigrp 100","no auto-summary","network 0.0.0.0","exit","do write"]
+router_configuration_commands = [
+    ("router eigrp 100","no auto-summary","network 0.0.0.0","exit","do write"),
+    ("router ospf 1","router-id 1.1.1.1","network 192.168.1.0 0.0.0.255","exit","do write")
+    ]
 
 ##All_Text
 all_text = {
@@ -60,10 +64,20 @@ all_text = {
     "limit_exceed":' You have reached your limit we are closing the session ',
     "exit_script":" Thank you for using the script ",
     "priviledge_mode":" We are in Priviledge Mode ",
-    "device_Router":"Device is Router",
-    "not_device_Router":"Device is not Router",
+    "device_Router":" Device is Router ",
+    "not_device_Router":" Device is not Router ",
     "backup_device":"Backup Created Succesfully of device",
+    "no_routing_protocol":"No routing protocol is configured on the device",
+    "routing_protocol_choice":"Please Choose your Routing Protocol (1:-> EIGRP | 2:-> OSPF | 3:-> RIP):- ",
+    "routing_user_choice":"Your choice is",
+    "invalid_choice":"Please provide the proper input",
+    "no_router_config":"No router configuration is being performed on the device due to invalid input",
+    "no_config_command_exit":"No config commands are avilable in our database for: "
 }
+
+##Global variable 
+counter_start = 0
+counter_end = 3
 
 def custom_logger(logger_name:str,logger_file_path:str,logger_level=logging.INFO)->object:
     logger = logging.getLogger(logger_name)
@@ -80,6 +94,10 @@ def custom_logger(logger_name:str,logger_file_path:str,logger_level=logging.INFO
 
 logger_path = os.path.join(os.getcwd(),"app.log")
 mylogger = custom_logger(logger_name="Netmiko_Logger",logger_file_path=logger_path)
+
+
+##Threading lock object
+print_lock = threading.RLock()
 
 
 def exceptionhandler(func)->None:
@@ -127,34 +145,124 @@ def backup_device(session:object,command="show run"):
         return True
 
 @exceptionhandler
-def command_output_file(command_Data:str):
+def command_output_file(command_Data:str)->bool:
     with open("command_Execution_ouput.txt","a") as backup:
         backup.write(command_Data)
         return True
 
+
+def reset_counter()->None:
+    '''
+    This function allow to reset the counter
+    '''
+    global counter_start
+    counter_start = 0 ## reseting the counter value
+    return None
+
 @exceptionhandler
-def routing_protocol_configuration(session: object):    
+def routing_protocol_filter(filter_data:str)->bool:
+    for router_config in router_configuration_commands:
+        for internal_config in router_config:
+            if filter_data.lower() in internal_config:
+                return internal_config
+            else: 
+                return False
+
+@exceptionhandler
+@exceptionhandler
+def routing_protocol_validator(session: object) -> bool:
+    '''
+    Routing Protocol validator function for choosing the validation
+    '''
+    clearscreen()
+    pattern = "Routing Protocol is"
+
+    routing_protocol_output = session.send_command('show ip protocol')
+
+    if pattern not in routing_protocol_output:
+        with print_lock:  # Locking before printing
+            print(f"{all_text['no_routing_protocol']}".center(shutil.get_terminal_size().columns, "^"))
+
+        global counter_start
+        global counter_end    
+        while counter_start < counter_end:
+            with print_lock:  # Locking before input prompt
+                user_choice = int(input(all_text["routing_protocol_choice"]))
+            
+            if isinstance(user_choice, int):
+                reset_counter()  # Reset counter function
+                match user_choice:
+                    case 1:
+                        with print_lock:  # Locking before printing
+                            print(f"{all_text['routing_user_choice']} EIGRP")
+                        eigrp_configuration_commands = routing_protocol_filter("eigrp")
+                        if eigrp_configuration_commands:
+                            command_output = session.send_config_set(eigrp_configuration_commands)
+                            return command_output
+                        else:
+                            with print_lock:  # Locking before printing
+                                print(f"{all_text['no_config_command_exit']} EIGRP")
+                            return False
+                        
+                    case 2:
+                        with print_lock:  # Locking before printing
+                            print(f"{all_text['routing_user_choice']} OSPF")
+                        ospf_configuration_commands = routing_protocol_filter("ospf")
+                        if ospf_configuration_commands:
+                            command_output = session.send_config_set(ospf_configuration_commands)
+                            return command_output
+                        else:
+                            with print_lock:  # Locking before printing
+                                print(f"{all_text['no_config_command_exit']} OSPF")
+                            return False
+                        
+                    case 3:
+                        with print_lock:  # Locking before printing
+                            print(f"{all_text['routing_user_choice']} RIP")
+                        rip_configuration_command = routing_protocol_filter("rip")
+                        if rip_configuration_command:  # Changed to `rip_configuration_command`
+                            command_output = session.send_config_set(rip_configuration_command)
+                            return command_output
+                        else:
+                            with print_lock:  # Locking before printing
+                                print(f"{all_text['no_config_command_exit']} RIP")
+                            return False
+            else:
+                counter_start += 1  # Increasing the counter value
+                with print_lock:  # Locking before printing
+                    print(all_text["invalid_choice"])
+
+        mylogger.error("limit_exceed")
+        exit(all_text['no_router_config'].center(shutil.get_terminal_size().columns, "^"))  # exiting the script
+    
+    else:
+        with print_lock:  # Locking before printing
+            print(f"Routing Configuration is Already done on the device {session.host} with routing protocol:\n {routing_protocol_output}")
+
+        return True  # Adjusted return value
+
+
+@exceptionhandler
+def routing_protocol_configuration(session: object)->bool:    
     backup_status = backup_device(session)
     
-    if backup_status:
-        print(f"{all_text['backup_device']} {session.host}")
+    if backup_status: 
+        print(f" {all_text['backup_device']} {session.host} ".center(shutil.get_terminal_size().columns, "^"))
     else:
         print(f"Backup was not performed for {session.host}. Continuing with configuration...")
  
-    
+    ## In this section we will check either either device has already configured the routing protocol or not
     final_output = " "
-    command_output = session.send_config_set(router_configuration_commands)
-    final_output += f"Command Executed on {session.host} and output is:\n{command_output}\n"
-    command_output_file(final_output)
+    result = routing_protocol_validator(session)
+    if result:
+        final_output += f"Command Executed on {session.host} and output is:\n{result}\n"
+        print(final_output)
+        command_output_file(final_output)
+        return True
+    else:
+        return False    
+
         
-    if "Error" in command_output:
-        print(f"Error executing command '{router_configuration_commands}': {command_output}")
-        return False
-
-    print(final_output)
-    return True
-            
-
 @exceptionhandler
 def device_send_command(session:object,command="show version")->None:
     prompt_ouput = session.find_prompt()                
@@ -168,23 +276,22 @@ def device_send_command(session:object,command="show version")->None:
         
     final_prompt = session.find_prompt()
     if final_prompt.endswith('#'):
-        print(f"{all_text['priviledge_mode']}".center(shutil.get_terminal_size().columns, "^"))
+        print(f"{all_text['priviledge_mode']} on host {session.host}".center(shutil.get_terminal_size().columns, "^"))
         device_version_output = session.send_command(command)
         pattern = r'ROM:\s+[A-Z]\d{4}'
 
         matches = re.search(pattern,device_version_output)
         if matches != None:
-            print(f"{all_text['device_Router']}:- {session.host} ".center(shutil.get_terminal_size().columns, "^"))
-            command_result = routing_protocol_configuration(session)
-            return command_result
-            
+            print(f" {all_text['device_Router']}:- {session.host} ".center(shutil.get_terminal_size().columns, "^"))
+            routing_protocol_configuration(session)  
+              
         else:
-            print(f"{all_text['not_device_Router']}:- {session.host}".center(shutil.get_terminal_size().columns, "!"))
+            print(f" {all_text['not_device_Router']}:- {session.host} ".center(shutil.get_terminal_size().columns, "!"))
             pass
+    clearscreen() 
 
 @exceptionhandler
 def device_validator(devices:List):
-    print("Device Validation will work here")
     result = device_connection_worker(device_send_command,devices)
     return result
 

@@ -1,71 +1,31 @@
 
-2024-10-23 11:53:46,086 - Netmiko_Logger - ERROR - Netmiko Timeout Exception Occured in session_intialiser TCP connection to device failed.
+2024-10-24 10:11:31,687 - Netmiko_Logger - ERROR - Netmiko Timeout Exception Occured in session_intialiser TCP connection to device failed.
 
 Common causes of this problem are:
 1. Incorrect hostname or IP address.
 2. Wrong TCP port.
 3. Intermediate firewall blocking access.
 
-Device settings: cisco_ios 192.168.1.115:22
+Device settings: cisco_ios 192.168.1.110:22
 
 
-2024-10-23 11:53:59,152 - Netmiko_Logger - ERROR - Netmiko Common or base exception occured in routing_protocol_configuration 
-Pattern not detected: 'R5\\(config\\)\\#' in output.
-
-Things you might try to fix this:
-1. Explicitly set your pattern using the expect_string argument.
-2. Increase the read_timeout to a larger value.
-
-You can also look at the Netmiko session_log or debug log for more information.
-
-
-2024-10-23 11:53:59,264 - Netmiko_Logger - ERROR - Netmiko Common or base exception occured in routing_protocol_configuration 
-Pattern not detected: 'R6\\(config\\)\\#' in output.
-
-Things you might try to fix this:
-1. Explicitly set your pattern using the expect_string argument.
-2. Increase the read_timeout to a larger value.
-
-You can also look at the Netmiko session_log or debug log for more information.
-
-
-2024-10-23 11:56:40,391 - Netmiko_Logger - ERROR - Netmiko Timeout Exception Occured in session_intialiser TCP connection to device failed.
+2024-10-24 10:11:31,688 - Netmiko_Logger - ERROR - Netmiko Timeout Exception Occured in session_intialiser TCP connection to device failed.
 
 Common causes of this problem are:
 1. Incorrect hostname or IP address.
 2. Wrong TCP port.
 3. Intermediate firewall blocking access.
 
-Device settings: cisco_ios 192.168.1.115:22
+Device settings: cisco_ios 192.168.1.120:22
 
 
-2024-10-23 11:58:52,837 - Netmiko_Logger - ERROR - Netmiko Timeout Exception Occured in session_intialiser TCP connection to device failed.
-
-Common causes of this problem are:
-1. Incorrect hostname or IP address.
-2. Wrong TCP port.
-3. Intermediate firewall blocking access.
-
-Device settings: cisco_ios 192.168.1.115:22
-
-
-2024-10-23 11:59:43,130 - Netmiko_Logger - ERROR - Netmiko Timeout Exception Occured in session_intialiser TCP connection to device failed.
+2024-10-24 10:11:31,688 - Netmiko_Logger - ERROR - Netmiko Timeout Exception Occured in session_intialiser TCP connection to device failed.
 
 Common causes of this problem are:
 1. Incorrect hostname or IP address.
 2. Wrong TCP port.
 3. Intermediate firewall blocking access.
 
-Device settings: cisco_ios 192.168.1.115:22
-
-
-2024-10-23 12:05:07,030 - Netmiko_Logger - ERROR - Netmiko Timeout Exception Occured in session_intialiser TCP connection to device failed.
-
-Common causes of this problem are:
-1. Incorrect hostname or IP address.
-2. Wrong TCP port.
-3. Intermediate firewall blocking access.
-
-Device settings: cisco_ios 192.168.1.115:22
+Device settings: cisco_ios 192.168.1.125:22
 
 
