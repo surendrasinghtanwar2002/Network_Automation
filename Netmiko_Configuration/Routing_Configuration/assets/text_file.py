@@ -6,7 +6,7 @@ class Text_File:
 
     ##common text
     common_text ={
-        "connection": "Connected to the host succesfully",
+        "host_connecting": "Connecting to the host",
         "device_type":"Enter your device type (eg. cisco_ios,juniper etc....):- ",
         "connected_host":"Connected to host ",
         "print_ip_table":"Do you want to print valid ip address table (Yes/No):- ",

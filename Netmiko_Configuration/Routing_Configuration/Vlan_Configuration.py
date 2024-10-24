@@ -1,28 +1,42 @@
 from components.common_function import Common_Function
 from components.common_function import Common_Function
+import threading
 import os
 
 class Routing_Configuration(Common_Function):
     def __init__(self):
-        loggerh = os.path.join(os.getcwd(),"app.log")
-        self.logger = Common_Function.custom_logger(logger_name="Netmiko_Logger",logger_file_path=loggerh)      ##Custom logger used in the function
-        self.device_details = None
+        self.logger = self.custom_logger()      ##Custom logger
+        self.session_list = None
+        self.locker = threading.RLock()            
 
-    def connection_to_devices(self):
-        print("In this we will connect to the multiple devices")
-        device_details = self.device_details_generator(device_details_file="device_details.csv")
-        self.device_details= device_details
-        print(f"This is the device details of the ------> {self.device_details}")
-        netmiko_conenction_list = self.thread_pool_executor(iterable_items=self.device_details,function_name=self.connectiontonetmiko_device)
-        if netmiko_conenction_list:
-            self.logger.info("Function executed succesfully")
-            print(f"This is the netmiko connection list {netmiko_conenction_list}")
-            for connection in netmiko_conenction_list:
-                output = connection.send_command('show run')        
-                print(f"Command Executed on the host {connection.host} and output is:- \n{output}")
+    def __promot_validator(self,session)->None:
+        output = session.find_prompt()
+        with self.locker:
+           print(f"Finding the prompt of the device {session.host} and prompt is {output}")
+        if output.endswith('#'):
+               print(f"Your are in priviledged mode {session.host}")
+        elif output.endswith('>'):
+               print(f"Your are in user execution mode {session.host}")
+               print(f"We need to perform the another task")
+               output = session.enable()
+               print(f"this is the output of the enable prompt = {output}")
+               output = session.find_prompt()
+               print(f"This is the current prompt of the device {output}")
         else:
-            self.logger.info("No thing performed herer")
+                print(f"You are not connected to the valid host")
+        return True
 
+    def prompt_validator_handler(self)->None:
+        result = self.threaded_device_connection_executor(iterable_items=self.session_list,function_name=self.__promot_validator)
+        print(result)
+        
+    def connection_to_devices(self)->None:
+        self.clear_screen()
+        device_details = self.device_details_generator(device_details_file="device_details.csv")
+        netmiko_conenction_list = self.threaded_device_connection_executor(iterable_items=device_details,function_name=self.initiate_netmiko_session)
+        self.session_list = netmiko_conenction_list
+        print(self.session_list)
+        self.prompt_validator_handler()
 
 
 if __name__ == "__main__":

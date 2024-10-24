@@ -2,7 +2,7 @@ from rich.console import Console
 from rich.progress import Progress
 from rich.text import Text
 from assets.text_file import Text_File
-# from text_file import Text_File
+import shutil
 
 console = Console()
 
@@ -13,7 +13,7 @@ class Text_Style:
     @staticmethod
     def common_text(primary_text: str = "", secondary_text: str = "", 
                     primary_text_color="white", primary_text_style="bold", 
-                    secondary_text_color="red", secondary_text_style: str = "bold",add_line_break: bool = True) -> None:
+                    secondary_text_color="red", secondary_text_style: str = "bold",add_line_break: bool = True,add_text_center:bool=False) -> None:
         """
         Function to display two styled texts in the console.
         """
@@ -27,12 +27,12 @@ class Text_Style:
         
         # Print both texts if both are provided
         if primary_text and secondary_text:
-            console.print(styled_primary, styled_secondary,end="\n" if add_line_break else "")
+            console.print(styled_primary, styled_secondary,end="\n" if add_line_break else "".center(shutil.get_terminal_size().columns,"") if add_text_center else "")
         elif primary_text:
-            console.print(styled_primary,end="\n" if add_line_break else "")
+            console.print(styled_primary,end="\n" if add_line_break else "".center(shutil.get_terminal_size().columns,"^") if add_text_center else "")
         elif secondary_text:
-            console.print(styled_secondary,end="\n" if add_line_break else "")
-
+            console.print(styled_secondary,end="\n" if add_line_break else "".center(shutil.get_terminal_size().columns,"^") if add_text_center else "")
+        
         return ""
     
     @staticmethod

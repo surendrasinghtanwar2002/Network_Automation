@@ -1,4 +1,5 @@
 ip,device_type,username,password,secret,port
 192.168.1.100,cisco_ios,admin,hackerzone,,22
 192.168.1.120,cisco_ios,admin,hackerzone,,22
-192.168.1.105,cisco_ios,admin,hackerzone,,
+192.168.1.105,cisco_ios,admin,hackerzone,hackerzone,
+192.168.1.110,cisco_ios,admin,hackerzone,,
