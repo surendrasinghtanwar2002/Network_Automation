@@ -1,8 +1,10 @@
-from typing import Any,List,Tuple,Union
+from components.exception_handler import NetmikoException_Handler
+from concurrent.futures import ThreadPoolExecutor
+from typing import Any,List,Tuple,Union,Callable
+from netmiko import ConnectHandler
 import logging
 import csv
 import os
-
 
 class Common_Function:
     def __init__(self):
@@ -25,8 +27,7 @@ class Common_Function:
 
         return logger
     
-    @staticmethod
-    def device_details_generator(device_details_file:str)->List:
+    def device_details_generator(self,device_details_file:str)->List:
         my_filter_device_list = []
         with open(device_details_file,mode="r") as file:
             reader = csv.DictReader(file)
@@ -35,6 +36,23 @@ class Common_Function:
                 my_filter_device_list.append(filter_row)
             
         return my_filter_device_list
+    
+
+    def connectiontonetmiko_device(self,device_details):
+        print(f"Trying to Connect with the device")
+        session = ConnectHandler(**device_details)
+        if session:
+            print(f"Connected to the deivce succesfully {session.host}")
+            return session
+    
+    def thread_pool_executor(self,iterable_items:List,function_name=Callable[['str'],Any])->List:
+        '''
+        Thread Pool Executor to crate the multiple thred and connect with the device
+        '''
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            connections = executor.map(function_name,iterable_items)
+            valid_connection = list(filter(lambda x: x != False and x != None,connections))      ##Filtering the valid connection only
+            return valid_connection
     
 
     ###dont remove this line we will remove after our work will be executed
