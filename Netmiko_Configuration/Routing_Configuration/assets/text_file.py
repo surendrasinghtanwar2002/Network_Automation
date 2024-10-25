@@ -7,6 +7,9 @@ class Text_File:
     ##common text
     common_text ={
         "host_connecting": "Connecting to the host",
+        "user_exec_mode": "Host is in exec mode",
+        "Privileged_mode_succesful":'Host is in Priviledged Mode',
+        "Privileged_mode":'Host is in Priviledge Mode',
         "device_type":"Enter your device type (eg. cisco_ios,juniper etc....):- ",
         "connected_host":"Connected to host ",
         "print_ip_table":"Do you want to print valid ip address table (Yes/No):- ",
@@ -66,6 +69,8 @@ class Text_File:
     exception_text ={
         "common_function_exception": f"Your function have exception {__name__}",
         "value_error":"You have passed wrong value",
+        "failed_enable_mode":'Failed to enter enable mode for',
+        "no_secret_key": "No Secret Key has found for",
         "CalledProcessError":"Subprocess Exception occured",
         "file_not_found":f"File not Founded Exception in {__name__}",
         "os_exception":"Os exception arrived",
@@ -117,7 +122,8 @@ class Text_File:
         "unsuccesful_prompt":"We are not able to find any prompt",
         "unsuccesful_command_execution":"Command is not executed succesfully",
         "Error_in_script":"Script got crashed due to some technical issue",
-        "User_Auth_Data_error":"Authenitcation data is not valid please try again"
+        "User_Auth_Data_error":"Authenitcation data is not valid please try again",
+        "noSecretKey": "No secret key is avilable"
     }
     ##debug text
     debug_text = {

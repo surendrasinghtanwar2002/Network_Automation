@@ -48,6 +48,10 @@ def NetmikoException_Handler(method: any):
             return False
         except IOError as ioerror:
             Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text["IOerror"],secondary_text=ioerror)
+        
+        except ValueError as valuerror:
+            Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text["value_error"], secondary_text=valuerror)
+            return False
             
         except Exception as e:
             # Catch any other unexpected exceptions
