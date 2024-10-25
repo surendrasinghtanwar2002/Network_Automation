@@ -9,6 +9,7 @@ class Text_File:
         "host_connecting": "Connecting to the host",
         "user_exec_mode": "Host is in exec mode",
         "Privileged_mode_succesful":'Host is in Priviledged Mode',
+        "valid_devices" : "Valid device details",
         "Privileged_mode":'Host is in Priviledge Mode',
         "device_type":"Enter your device type (eg. cisco_ios,juniper etc....):- ",
         "connected_host":"Connected to host ",
@@ -68,6 +69,7 @@ class Text_File:
     ##common exception text
     exception_text ={
         "common_function_exception": f"Your function have exception {__name__}",
+        "regex_Exception":'Regex error occurred:',
         "value_error":"You have passed wrong value",
         "failed_enable_mode":'Failed to enter enable mode for',
         "no_secret_key": "No Secret Key has found for",

@@ -2,6 +2,7 @@ from netmiko import ConnectionException,NetmikoTimeoutException,NetmikoAuthentic
 from concurrent.futures import CancelledError,TimeoutError,BrokenExecutor
 from assets.text_style import Text_Style
 from assets.text_file import Text_File
+import re
 
 def NetmikoException_Handler(method: any):
     """
@@ -98,7 +99,8 @@ def Regular_Exception_Handler(method: any):
             Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text["file_not_found"],secondary_text=filerror)
         except OSError as oserror:
             Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text["os exception"],secondary_text=oserror,secondary_text_style="bold")
-
+        except re.error as e:
+            Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text['regex_Exception'],secondary_text=e,secondary_text_style='bold')
     return wrapper
 
 def ThreadPoolExeceptionHandler(method):

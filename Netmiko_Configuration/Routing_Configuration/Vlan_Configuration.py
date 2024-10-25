@@ -1,8 +1,9 @@
 from components.common_function import Common_Function
+from assets.text_file import Text_File
 from components.common_function import Common_Function
-import threading
 from tabulate import tabulate
-import os
+from typing import List,Union,AnyStr
+
 
 class Routing_Configuration(Common_Function):
     def __init__(self):
@@ -11,21 +12,25 @@ class Routing_Configuration(Common_Function):
     def funct():
         print("WE WILL CREATE THE FUNCTION HERE")
 
+    def valid_device_filteration(self,device_session_list: List)->None:
+        '''
+        Method use to filter the  valid devices from the list
+        '''
+        valid_connection = list(filter(lambda x: x != False,device_session_list))      ##Filtering the valid connection only
+        self.netmiko_sessions = valid_connection
+
+
+            
     def connection_to_devices(self)->None:
         self.clear_screen()
         device_details = self.device_details_generator(device_details_file="device_details.csv")
         netmiko_conenction_list = self.threaded_device_connection_executor(iterable_items=device_details,function_name=self.initiate_netmiko_session)
-
-        print(f"This value is coming from the self.netmiko connection this is instance attributes Position 11 -------->\n {self.netmiko_sessions} <------------")
-
+        self.valid_device_filteration(netmiko_conenction_list)                      ##Filtering the valid connection and updating the current netmiko session                 
         output = self.multi_device_prompt_manager()
-        print(f"This is the current netmiko session object after performing everything  Position 22 {self.netmiko_sessions}")
-        self.logging.info(f"Valid device details{output}")
-        print(f"This is the current netmiko session object after performing everything  Position 33 {self.netmiko_sessions}")
+        self.logging.info(f"{Text_File.common_text['valid_devices']}{output}") 
         header = ["Host","Privileged EXEC mode Status"]
         print(tabulate(output,header,tablefmt='grid'))
-
-        
+        self.threaded_device_connection_executor(iterable_items=self.netmiko_sessions,function_name=self.send_command)
        
 
 

@@ -8,6 +8,7 @@ import threading
 import logging
 import csv
 import os
+import re
 
 class Common_Function:
     def __init__(self):
@@ -48,14 +49,14 @@ class Common_Function:
                 my_filter_device_list.append(filter_row)
             
         return my_filter_device_list
-
+    
+    @Regular_Exception_Handler
     def __remove_session(self,host:AnyStr)->None:
         '''
         Method to remove the session which is not in Priviledge Exec Mode
         '''
         self.netmiko_sessions = [session for session in self.netmiko_sessions if session.host != host]
-        self.logging.info(f"Remove session which is not able to switch in Priviledge Exec Mode")
-        return self.netmiko_sessions                ##just for the debug purpose
+        self.logging.info(f"{Text_File.error_text['removing_invalid_session']} {host}")
     
     @NetmikoException_Handler
     def __find_and_handle_prompt(self, session: object) -> None:
@@ -78,12 +79,7 @@ class Common_Function:
                         return (session.host, False)
                 except ValueError as e:
                     self.logging.error(f"{Text_File.exception_text['failed_enable_mode']} {session.host}: {e}")
-                    result = self.__remove_session(host=session.host)                ##Remove the session from the list
-                    print(f"------------------->After removing the session from the netmiko list\n{result}<------------")         ##just for the debug purpose
-
-                    print(f"--------------------> After updating the netmiko session list {self.netmiko_sessions}")
-                    for items in self.netmiko_sessions:                         ##This and above print line statement all are used for debug purpose
-                        print(f"This the current host after updating the netmiko session list {items.host}")
+                    self.__remove_session(host=session.host)                ##Remove the session from the list
                     return (session.host, False)  # Explicitly return False on failure
                 
             current_prompt = session.find_prompt()
@@ -95,6 +91,19 @@ class Common_Function:
         return (session.host, False)  # Return False if neither condition is met.
 
 
+    def run_command_validation(self,session:object,command_ouput:Union[AnyStr,List],command:AnyStr):
+        '''
+        This method allow to validate the command ouput either command is valid for the device or not
+        '''
+        with self.customlocker:
+            if isinstance(command_ouput,str):
+                custom_pattern = r'^% .+:\s+"[^"]+"'               ##Pattern for finding the match
+                device_output = re.search(custom_pattern,command_ouput)
+                if device_output:
+                    self.logging.error(f"The command {command} is not valid on device {session.host} please check the command again")
+
+            if isinstance(command_ouput,list):
+                return(f"The output of the host {session.host} and output is:- \n{command_ouput}")   
 
     @ThreadPoolExeceptionHandler
     def multi_device_prompt_manager(self)->List:
@@ -104,6 +113,8 @@ class Common_Function:
         device_prompts = self.threaded_device_connection_executor(iterable_items=self.netmiko_sessions,function_name=self.__find_and_handle_prompt)
         filter_devices = list(filter(lambda x: x[1],device_prompts))            ##This filter method will filter all the not enable devices.
         return filter_devices
+    
+    
 
     @NetmikoException_Handler
     def initiate_netmiko_session(self,device_details)->object:
@@ -111,7 +122,6 @@ class Common_Function:
         Method to make the netmiko session using ConnectHandler Method
         '''
         Text_Style.common_text(primary_text=Text_File.common_text['host_connecting'],secondary_text=device_details['ip'])
-        print(f"This is the details which is used to connect the device {device_details}")          ##Just for the debug purpose
         session = ConnectHandler(**device_details)
         if session:
             Text_Style.common_text(primary_text=Text_File.common_text['connected_host'],secondary_text=session.host,secondary_text_color="green")
@@ -125,8 +135,6 @@ class Common_Function:
         Thread Pool Executor to crate the multiple thred and connect with the device
         '''
         with ThreadPoolExecutor(max_workers=10) as executor:
-            connections = executor.map(function_name,iterable_items)
-            valid_connection = list(filter(lambda x: x != False and x != None,connections))      ##Filtering the valid connection only
-            self.netmiko_sessions = valid_connection                ##Updating the netmiko session instance attributes
-            return self.netmiko_sessions
-    
+            connections = executor.map(function_name,iterable_items) 
+            sessions = list(netmiko_session for netmiko_session in connections)
+            return sessions
