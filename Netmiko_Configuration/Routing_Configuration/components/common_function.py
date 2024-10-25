@@ -53,8 +53,9 @@ class Common_Function:
         '''
         Method to remove the session which is not in Priviledge Exec Mode
         '''
-        self.netmiko_sessions = [session for session in self.netmiko_sessions if session.host == host]
+        self.netmiko_sessions = [session for session in self.netmiko_sessions if session.host != host]
         self.logging.info(f"Remove session which is not able to switch in Priviledge Exec Mode")
+        return self.netmiko_sessions                ##just for the debug purpose
     
     @NetmikoException_Handler
     def __find_and_handle_prompt(self, session: object) -> None:
@@ -77,10 +78,14 @@ class Common_Function:
                         return (session.host, False)
                 except ValueError as e:
                     self.logging.error(f"{Text_File.exception_text['failed_enable_mode']} {session.host}: {e}")
-                    self.__remove_session(host=session.host)                ##Remove the session from the list
+                    result = self.__remove_session(host=session.host)                ##Remove the session from the list
+                    print(f"------------------->After removing the session from the netmiko list\n{result}<------------")         ##just for the debug purpose
+
+                    print(f"--------------------> After updating the netmiko session list {self.netmiko_sessions}")
+                    for items in self.netmiko_sessions:                         ##This and above print line statement all are used for debug purpose
+                        print(f"This the current host after updating the netmiko session list {items.host}")
                     return (session.host, False)  # Explicitly return False on failure
                 
-
             current_prompt = session.find_prompt()
             print(f"{session.host} with prompt {current_prompt}")
             if current_prompt.endswith('#'):

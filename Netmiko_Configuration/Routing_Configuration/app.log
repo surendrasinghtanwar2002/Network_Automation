@@ -13,3 +13,27 @@
 2024-10-25 10:58:58,411 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
 2024-10-25 10:58:58,411 - Netmiko_Logger - INFO - Remove session which is not able to switch in Priviledge Exec Mode
 2024-10-25 10:59:00,528 - Netmiko_Logger - INFO - Valid device details[('192.168.1.120', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.110', True), ('192.168.1.60', True)]
+2024-10-25 11:02:12,507 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-25 11:02:12,507 - Netmiko_Logger - INFO - Remove session which is not able to switch in Priviledge Exec Mode
+2024-10-25 11:02:13,404 - Netmiko_Logger - INFO - Valid device details[('192.168.1.120', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.110', True), ('192.168.1.60', True)]
+2024-10-25 11:02:33,504 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-25 11:02:33,505 - Netmiko_Logger - INFO - Remove session which is not able to switch in Priviledge Exec Mode
+2024-10-25 11:02:34,829 - Netmiko_Logger - INFO - Valid device details[('192.168.1.120', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.110', True), ('192.168.1.60', True)]
+2024-10-25 11:02:54,053 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-25 11:02:54,054 - Netmiko_Logger - INFO - Remove session which is not able to switch in Priviledge Exec Mode
+2024-10-25 11:02:54,666 - Netmiko_Logger - INFO - Valid device details[('192.168.1.120', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.110', True), ('192.168.1.60', True)]
+2024-10-25 11:05:25,582 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-25 11:05:25,582 - Netmiko_Logger - INFO - Remove session which is not able to switch in Priviledge Exec Mode
+2024-10-25 11:05:26,800 - Netmiko_Logger - INFO - Valid device details[('192.168.1.120', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.110', True), ('192.168.1.60', True)]
+2024-10-25 11:06:45,231 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-25 11:06:45,232 - Netmiko_Logger - INFO - Remove session which is not able to switch in Priviledge Exec Mode
+2024-10-25 11:06:45,983 - Netmiko_Logger - INFO - Valid device details[('192.168.1.120', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.110', True), ('192.168.1.60', True)]
+2024-10-25 11:07:41,056 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-25 11:07:41,056 - Netmiko_Logger - INFO - Remove session which is not able to switch in Priviledge Exec Mode
+2024-10-25 11:07:41,795 - Netmiko_Logger - INFO - Valid device details[('192.168.1.120', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.110', True), ('192.168.1.60', True)]
+2024-10-25 11:08:07,602 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-25 11:08:07,602 - Netmiko_Logger - INFO - Remove session which is not able to switch in Priviledge Exec Mode
+2024-10-25 11:08:08,898 - Netmiko_Logger - INFO - Valid device details[('192.168.1.120', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.110', True), ('192.168.1.60', True)]
+2024-10-25 11:09:35,488 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-25 11:09:35,489 - Netmiko_Logger - INFO - Remove session which is not able to switch in Priviledge Exec Mode
+2024-10-25 11:09:36,130 - Netmiko_Logger - INFO - Valid device details[('192.168.1.120', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.110', True), ('192.168.1.60', True)]

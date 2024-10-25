@@ -16,15 +16,16 @@ class Routing_Configuration(Common_Function):
         device_details = self.device_details_generator(device_details_file="device_details.csv")
         netmiko_conenction_list = self.threaded_device_connection_executor(iterable_items=device_details,function_name=self.initiate_netmiko_session)
 
-        print(f"This value is coming from the self.netmiko connection this is instance attributes -------->\n {self.netmiko_sessions} <------------")
+        print(f"This value is coming from the self.netmiko connection this is instance attributes Position 11 -------->\n {self.netmiko_sessions} <------------")
 
         output = self.multi_device_prompt_manager()
+        print(f"This is the current netmiko session object after performing everything  Position 22 {self.netmiko_sessions}")
         self.logging.info(f"Valid device details{output}")
-        print(f'-----------> this is the netmiko session object {netmiko_conenction_list}')
+        print(f"This is the current netmiko session object after performing everything  Position 33 {self.netmiko_sessions}")
         header = ["Host","Privileged EXEC mode Status"]
         print(tabulate(output,header,tablefmt='grid'))
 
-        print(f"This is the current netmiko session object after performing everything {self.netmiko_sessions}")
+        
        
 
 
