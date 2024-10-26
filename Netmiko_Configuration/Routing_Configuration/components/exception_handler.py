@@ -2,7 +2,26 @@ from netmiko import ConnectionException,NetmikoTimeoutException,NetmikoAuthentic
 from concurrent.futures import CancelledError,TimeoutError,BrokenExecutor
 from assets.text_style import Text_Style
 from assets.text_file import Text_File
+import logging
+import os
 import re
+
+def custom_logger(logger_level=logging.INFO)->object:
+        '''
+        Method to create the custom logger and capture the logs in app.log file.
+        '''
+        logger = logging.getLogger('Netmiko_Logger')
+        logger.setLevel(logger_level)
+        console_handler = logging.StreamHandler()
+        file_handler = logging.FileHandler(os.path.join(os.getcwd(),"app.log"))
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        console_handler.setFormatter(formatter)
+        file_handler.setFormatter(formatter)
+        logger.addHandler(console_handler)
+        logger.addHandler(file_handler)
+        return logger
+
+logger = custom_logger()
 
 def NetmikoException_Handler(method: any):
     """
@@ -99,6 +118,8 @@ def Regular_Exception_Handler(method: any):
             Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text["file_not_found"],secondary_text=filerror)
         except OSError as oserror:
             Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text["os exception"],secondary_text=oserror,secondary_text_style="bold")
+        except KeyError as keyerror:
+            Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text['key_error'],secondary_text=keyerror)
         except re.error as e:
             Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text['regex_Exception'],secondary_text=e,secondary_text_style='bold')
     return wrapper

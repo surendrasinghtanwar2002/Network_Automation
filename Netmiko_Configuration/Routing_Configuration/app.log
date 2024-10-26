@@ -1,1 +1,54 @@
-2024-10-25 12:51:55,746 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-26 12:13:58,150 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:13:58,150 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:14:02,132 - Netmiko_Logger - ERROR - Ping to 192.168.1.115 failed with return code 1.
+2024-10-26 12:14:02,132 - Netmiko_Logger - ERROR - Ping to 192.168.1.115 failed with return code 1.
+2024-10-26 12:14:24,135 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:14:24,135 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:14:28,133 - Netmiko_Logger - ERROR - Ping to 192.168.1.125 failed with return code 1.
+2024-10-26 12:14:28,133 - Netmiko_Logger - ERROR - Ping to 192.168.1.125 failed with return code 1.
+2024-10-26 12:15:05,136 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:15:05,136 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:15:47,634 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:15:47,634 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:16:10,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:16:10,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:16:32,131 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:16:32,131 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:17:42,474 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:17:42,474 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:18:59,651 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:18:59,651 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:19:26,141 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:19:26,141 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:19:38,630 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:19:38,630 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:20:42,629 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:20:42,629 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:21:21,640 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:21:21,640 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:22:47,134 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:22:47,134 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:23:12,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:23:12,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:23:42,632 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:23:42,632 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:23:46,628 - Netmiko_Logger - ERROR - Ping to 192.168.1.100 failed with return code 1.
+2024-10-26 12:23:46,628 - Netmiko_Logger - ERROR - Ping to 192.168.1.100 failed with return code 1.
+2024-10-26 12:23:50,629 - Netmiko_Logger - ERROR - Ping to 192.168.1.60 failed with return code 1.
+2024-10-26 12:23:50,629 - Netmiko_Logger - ERROR - Ping to 192.168.1.60 failed with return code 1.
+2024-10-26 12:24:43,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:24:43,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:25:44,637 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:25:44,637 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
+2024-10-26 12:25:56,686 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-26 12:25:56,686 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-26 12:25:56,687 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-26 12:25:56,687 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-26 12:26:03,003 - Netmiko_Logger - INFO - Valid device details[('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.60', True)]
+2024-10-26 12:26:03,003 - Netmiko_Logger - INFO - Valid device details[('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.60', True)]
+2024-10-26 12:26:03,715 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.115'. Please check the command.
+2024-10-26 12:26:03,715 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.115'. Please check the command.
+2024-10-26 12:26:03,717 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.105'. Please check the command.
+2024-10-26 12:26:03,717 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.105'. Please check the command.
+2024-10-26 12:26:03,719 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.125'. Please check the command.
+2024-10-26 12:26:03,719 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.125'. Please check the command.

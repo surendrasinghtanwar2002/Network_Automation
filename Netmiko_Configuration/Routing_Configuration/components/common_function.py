@@ -1,10 +1,13 @@
 from components.exception_handler import NetmikoException_Handler,ThreadPoolExeceptionHandler,Regular_Exception_Handler
+from typing import Any,List,Tuple,Union,Callable,AnyStr,Dict
 from concurrent.futures import ThreadPoolExecutor
-from typing import Any,List,Tuple,Union,Callable,AnyStr
 from assets.text_style import Text_Style
 from assets.text_file import Text_File
 from netmiko import ConnectHandler
+from tabulate import tabulate
+import subprocess
 import threading
+import platform 
 import logging
 import csv
 import os
@@ -21,7 +24,8 @@ class Common_Function:
         '''Method to clear the screen.'''
         os.system("cls" if os.name == "nt" else "clear")
     
-    def custom_logger(self,logger_level=logging.INFO)->object:
+    @staticmethod
+    def custom_logger(logger_level=logging.INFO)->object:
         '''
         Method to create the custom logger and capture the logs in app.log file.
         '''
@@ -37,19 +41,46 @@ class Common_Function:
         return logger
     
     @Regular_Exception_Handler
-    def device_details_generator(self,device_details_file:str)->List:
-        '''
-        Method to read data from the csv and generate the device details.
-        '''
+    def device_details_generator(self, device_details_file: str) -> List:
         my_filter_device_list = []
-        with open(device_details_file,mode="r") as file:
+
+        with open(device_details_file, mode="r") as file:
             reader = csv.DictReader(file)
             for row in reader:
-                filter_row = {key:value for key,value in row.items() if value}          ##Used to filter the valid  value from the csv
+                filter_row = {key: value for key, value in row.items() if value}
                 my_filter_device_list.append(filter_row)
-            
-        return my_filter_device_list
+
+        devices = [device['ip'] for device in my_filter_device_list]
+        filtered_devices = self.ping_to_device(device_ip=devices)
+
+        filter_devices = [
+            item for item in my_filter_device_list
+            if item['ip'] in filtered_devices
+        ]
+
+        return filter_devices
     
+    @Regular_Exception_Handler
+    def display_device_info(self,device_details:List[Dict[str, str]])->None:
+        '''
+        Method to display device info in the tabular format.
+        '''
+        Text_Style.common_text(primary_text=Text_File.common_text["valid_device_details"], primary_text_color="green")
+        device_header = ["Device_IP", "Device_Type", "Username", "Password", "Secret", "Port"]
+        devices_list = []  # Contain the device details
+        
+        for device in device_details:
+            devices_list.append([
+                device['ip'],
+                device['device_type'],
+                device['username'],
+                device['password'],
+                device['secret'] if device['secret'] else None,
+                device.get('port', None)  # Using .get() for safety
+            ])
+        
+        print(tabulate(devices_list, headers=device_header, tablefmt='grid'))
+
     @Regular_Exception_Handler
     def __remove_session(self,host:AnyStr)->None:
         '''
@@ -90,20 +121,65 @@ class Common_Function:
 
         return (session.host, False)  # Return False if neither condition is met.
 
+    @Regular_Exception_Handler
+    def ping_to_device(self, device_ip: Union[AnyStr, List]) -> Union[List, bool]:
+        '''
+        Function to ping the device(s) and validate if reachable.
+        '''
+        param = '-n' if platform.system().lower() == 'windows' else '-c'
+        valid_ip = []  # List to store reachable IPs
+        
+        if isinstance(device_ip, list):
+            for device in device_ip:
+                command = ['ping', param, '1', device]                
+                result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                
+                if "Destination host unreachable" in result.stdout:
+                    self.logging.error(f"Device is unreachable {device}")             ##error log
+                elif result.returncode == 0:
+                    valid_ip.append(device)
+                else:
+                    self.logging.error(f"Ping to {device} failed with return code {result.returncode}.")  ##error log
 
-    def run_command_validation(self,session:object,command_ouput:Union[AnyStr,List],command:AnyStr):
+            return valid_ip  # Returns the list of reachable IPs        
+        
+        elif isinstance(device_ip, str):
+            command = ['ping', param, '1', device_ip]
+            result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)           
+            
+            if "Destination host unreachable" in result.stdout:
+                self.logging.error(f"Device is unreachable {device}")             ##error log
+                return False 
+            elif result.returncode == 0:
+                return True  # Reachable
+            else:
+                self.logging.error(f"Ping to {device} failed with return code {result.returncode}.")  ##error log
+                return False
+        
+        else:
+            print("No valid IP(s) provided.") 
+            return False
+
+    @NetmikoException_Handler
+    def run_command_validation(self, session: object, command_output: Union[AnyStr, List], command: AnyStr):
         '''
-        This method allow to validate the command ouput either command is valid for the device or not
+        Validate the command output to determine if the command is valid for the device.
         '''
-        with self.customlocker:
-            if isinstance(command_ouput,str):
-                custom_pattern = r'^% .+:\s+"[^"]+"'               ##Pattern for finding the match
-                device_output = re.search(custom_pattern,command_ouput)
+        with self.customlocker: 
+            if isinstance(command_output, list):            ##If the output is list
+                return command_output
+            
+            elif isinstance(command_output, str):
+                custom_pattern = r'^% .+:\s+"[^"]+"'  # Pattern to match invalid command output
+                device_output = re.search(custom_pattern, command_output)
+                
                 if device_output:
-                    self.logging.error(f"The command {command} is not valid on device {session.host} please check the command again")
+                    self.logging.error(f"The command '{command}' is not valid on device '{session.host}'. Please check the command.")
+                    return False
+                else:
+                    return f"The output of the command {command} host {session.host} is:\n{command_output}"
+            
 
-            if isinstance(command_ouput,list):
-                return(f"The output of the host {session.host} and output is:- \n{command_ouput}")   
 
     @ThreadPoolExeceptionHandler
     def multi_device_prompt_manager(self)->List:
@@ -127,7 +203,7 @@ class Common_Function:
             Text_Style.common_text(primary_text=Text_File.common_text['connected_host'],secondary_text=session.host,secondary_text_color="green")
             return session
         else:
-            return False
+            self.logging.error(f'{Text_File.error_text['connection_failed']} on host {device_details['ip']}')
     
     @ThreadPoolExeceptionHandler
     def threaded_device_connection_executor(self,iterable_items:List,function_name=Callable[['str'],Any])->List:

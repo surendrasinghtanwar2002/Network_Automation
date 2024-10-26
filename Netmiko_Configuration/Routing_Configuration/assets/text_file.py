@@ -7,6 +7,7 @@ class Text_File:
     ##common text
     common_text ={
         "host_connecting": "Connecting to the host",
+        "command_execution_try": "Trying to execute the command on",
         "user_exec_mode": "Host is in exec mode",
         "Privileged_mode_succesful":'Host is in Priviledged Mode',
         "valid_devices" : "Valid device details",
@@ -16,6 +17,7 @@ class Text_File:
         "print_ip_table":"Do you want to print valid ip address table (Yes/No):- ",
         "username":"Enter your Username:- ",
         "password":"Enter your Password:- ",
+        "valid_device_details": "All reachable device details Table".center(shutil.get_terminal_size().columns,"!"),
         "valid_cred":"Your credentails are in valid order",
         "host_ip_prompt":"Enter your HOST IP ADDRESS:- ",
         "mutli_auth_welcome":" Welcome to Multi Device Connection Authentication Page ".center(shutil.get_terminal_size().columns,"!"),
@@ -69,6 +71,7 @@ class Text_File:
     ##common exception text
     exception_text ={
         "common_function_exception": f"Your function have exception {__name__}",
+        'key_error':"key doesn't exist.",
         "regex_Exception":'Regex error occurred:',
         "value_error":"You have passed wrong value",
         "failed_enable_mode":'Failed to enter enable mode for',
@@ -111,6 +114,9 @@ class Text_File:
     error_text = {
         "device_details_error":"!!! You have provided wrong details of the device !!!".center(shutil.get_terminal_size().columns),
         "limit_exceed":"You have reached your limit",
+        "no_valid_ip": "No valid ip is provided",
+        'connection_failed':"Connection to the device:- ",
+        "removing_invalid_session":"Removing invalid session from the netmiko object list",
         "error_command_excuted":" Your commands are not executed on the server so we are quitting out from the script ".center(shutil.get_terminal_size().columns,"#"),
         "Unsuccessful_File_Creation":"Your File Have not been created",
         "wrong_value":"You have provided the wrong value",
