@@ -9,6 +9,7 @@ class Text_File:
         "host_connecting": "Connecting to the host",
         "command_execution_try": "Trying to execute the command on",
         "user_exec_mode": "Host is in exec mode",
+        "device_output":"device_output is:- ",
         "Privileged_mode_succesful":'Host is in Priviledged Mode',
         "valid_devices" : "Valid device details",
         "Privileged_mode":'Host is in Priviledge Mode',
@@ -113,9 +114,10 @@ class Text_File:
     ##error text
     error_text = {
         "device_details_error":"!!! You have provided wrong details of the device !!!".center(shutil.get_terminal_size().columns),
-        "limit_exceed":"You have reached your limit",
+        "limit_exceed":" You have reached your limit ".center(shutil.get_terminal_size().columns,"!"),
         "no_valid_ip": "No valid ip is provided",
         'connection_failed':"Connection to the device:- ",
+        "command_failed": "Command execution failed or returned invalid output.",
         "removing_invalid_session":"Removing invalid session from the netmiko object list",
         "error_command_excuted":" Your commands are not executed on the server so we are quitting out from the script ".center(shutil.get_terminal_size().columns,"#"),
         "Unsuccessful_File_Creation":"Your File Have not been created",

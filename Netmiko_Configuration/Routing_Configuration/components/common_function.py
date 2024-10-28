@@ -15,7 +15,7 @@ import re
 
 class Common_Function:
     def __init__(self):
-        self.netmiko_sessions = None
+        self.netmiko_sessions = None   ##This will be super method manage the state globally.
         self.customlocker = threading.RLock()
         self.logging = self.custom_logger()
     
@@ -173,14 +173,12 @@ class Common_Function:
                 custom_pattern = r'^% .+:\s+"[^"]+"'  # Pattern to match invalid command output
                 device_output = re.search(custom_pattern, command_output)
                 
-                if device_output:
-                    self.logging.error(f"The command '{command}' is not valid on device '{session.host}'. Please check the command.")
+                if device_output:       ##If pattern Match 
+                    self.logging.error(f"The command '{command}' is not valid on device '{session.host}'. Please check the command.") 
                     return False
-                else:
+                else:                   ## If pattern doesn;t Match
                     return f"The output of the command {command} host {session.host} is:\n{command_output}"
-            
-
-
+                                                                                                                              
     @ThreadPoolExeceptionHandler
     def multi_device_prompt_manager(self)->List:
         '''
@@ -190,7 +188,34 @@ class Common_Function:
         filter_devices = list(filter(lambda x: x[1],device_prompts))            ##This filter method will filter all the not enable devices.
         return filter_devices
     
+    def valid_device_filteration(self, device_session_list: List) -> None:
+        '''
+        Method to filter the valid devices from the list.
+        '''
+        valid_connection = list(filter(lambda x: x is not False, device_session_list))  # Filtering valid connections only
+        self.netmiko_sessions = valid_connection       
     
+    def display_menu(self,menu_items:List) ->None:
+        '''
+        Method to rener the display menu on the console.
+        '''
+        for no,items in enumerate(menu_items,start=1):
+            Text_Style.common_text(primary_text=no,secondary_text=items['menu_name'])
+    
+    def check_user_choice(self,event_handler:List,default_handler:callable[any])->None:
+        '''
+        Method to check the user choice from the event handler
+        '''
+        c_start = 0
+        c_end = 3
+        while c_start < c_end:
+            user_event_choice = input(Text_Style.common_text(primary_text=Text_File.common_text['user_choice_no'])).strip()
+            if user_event_choice in self.event_handler:             ##Validate either user event is presented in the event handler or not
+                self.event_handler.get(user_event_choice)()     
+            else:
+                Text_Style.ExceptionTextFormatter(primary_text=Text_File.error_text['menu_wrong_input'])
+                c_start += 1            ##increasing the counter    
+        self.default_handler()    
 
     @NetmikoException_Handler
     def initiate_netmiko_session(self,device_details)->object:
