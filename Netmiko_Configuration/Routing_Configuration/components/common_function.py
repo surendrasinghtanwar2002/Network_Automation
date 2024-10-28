@@ -1,6 +1,7 @@
 from components.exception_handler import NetmikoException_Handler,ThreadPoolExeceptionHandler,Regular_Exception_Handler
 from typing import Any,List,Tuple,Union,Callable,AnyStr,Dict
 from concurrent.futures import ThreadPoolExecutor
+from jinja2 import Environment,FileSystemLoader
 from assets.text_style import Text_Style
 from assets.text_file import Text_File
 from netmiko import ConnectHandler
@@ -188,6 +189,7 @@ class Common_Function:
         filter_devices = list(filter(lambda x: x[1],device_prompts))            ##This filter method will filter all the not enable devices.
         return filter_devices
     
+    @Regular_Exception_Handler
     def valid_device_filteration(self, device_session_list: List) -> None:
         '''
         Method to filter the valid devices from the list.
@@ -195,6 +197,7 @@ class Common_Function:
         valid_connection = list(filter(lambda x: x is not False, device_session_list))  # Filtering valid connections only
         self.netmiko_sessions = valid_connection       
     
+    @Regular_Exception_Handler
     def display_menu(self,menu_items:List) ->None:
         '''
         Method to rener the display menu on the console.
@@ -202,6 +205,15 @@ class Common_Function:
         for no,items in enumerate(menu_items,start=1):
             Text_Style.common_text(primary_text=no,secondary_text=items['menu_name'])
     
+    @Regular_Exception_Handler
+    def file_path_specifier(self,file_path:str):
+        '''
+        Method to get the path of the file
+        '''
+        config_file_path = os.path.abspath(file_path)
+        return config_file_path
+    
+    @Regular_Exception_Handler
     def check_user_choice(self,event_handler:List,default_handler:callable[any])->None:
         '''
         Method to check the user choice from the event handler
@@ -217,6 +229,20 @@ class Common_Function:
                 c_start += 1            ##increasing the counter    
         self.default_handler()    
 
+    def jinja_environment_specifier(template_name: str):
+        '''
+        Method to create the jinja environment and load the jinja template from the folder.
+        '''
+        current_absolute_path = os.path.dirname(os.path.abspath(__file__))      
+
+        network_config_path = os.path.join(current_absolute_path, 'config_templates')
+
+        env = Environment(loader=FileSystemLoader(network_config_path))
+
+        template = env.get_template(template_name)
+
+        return template         ##return the jinja template
+    
     @NetmikoException_Handler
     def initiate_netmiko_session(self,device_details)->object:
         '''

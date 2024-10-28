@@ -1,0 +1,30 @@
+{# This Jinja template is for the VLAN configuration #}
+
+{% macro vlan_configuration(device_details) %}
+{% if device_details is iterable %}             
+    {% for key, value in device_details.items() if value %}  {# Iterate over the items in the dictionary #}
+
+        {% if key | lower == "create_vlan" %}
+
+            {% if value is iterable %}  {# Check if the value is iterable (e.g., list of VLAN numbers) #}
+                {% for vlan_no in value %}
+                    vlan {{ vlan_no }}
+                {% endfor %}
+            {% else %}
+                vlan {{ value }}  {# If value is not iterable, use it directly as VLAN number #}
+            {% endif %}
+
+        {% endif %}
+
+    {% endfor %}
+
+{% elif not device_details %}  {# If device_details is empty or None #}
+    {# Handle simple command execution here #}
+    No device details provided.
+
+{% else %}
+    {# Handle the case where device_details is not iterable #}
+    Invalid data provided for device_details.
+{% endif %}
+{% endmacro %}
+
