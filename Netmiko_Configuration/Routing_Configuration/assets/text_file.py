@@ -7,6 +7,7 @@ class Text_File:
     ##common text
     common_text ={
         "host_connecting": "Connecting to the host",
+        "menu": " Menu ".center(shutil.get_terminal_size().columns,"*"),
         "command_execution_try": "Trying to execute the command on",
         "user_exec_mode": "Host is in exec mode",
         "device_output":"device_output is:- ",
@@ -18,7 +19,8 @@ class Text_File:
         "print_ip_table":"Do you want to print valid ip address table (Yes/No):- ",
         "username":"Enter your Username:- ",
         "password":"Enter your Password:- ",
-        "valid_device_details": "All reachable device details Table".center(shutil.get_terminal_size().columns,"!"),
+        "valid_privileged_device": " All Privileged Exec Mode Devices ".center(shutil.get_terminal_size().columns,"!"),
+        "valid_device_details": " All reachable device details Table ".center(shutil.get_terminal_size().columns,"!"),
         "valid_cred":"Your credentails are in valid order",
         "host_ip_prompt":"Enter your HOST IP ADDRESS:- ",
         "mutli_auth_welcome":" Welcome to Multi Device Connection Authentication Page ".center(shutil.get_terminal_size().columns,"!"),
@@ -38,7 +40,7 @@ class Text_File:
         "Exit_Permission":"Do you want to exit from the menu (Yes/No):- ",
         "User_choice":"Enter your choice:- ",
         "succesful_found_prompt":"We have found prompt in the basic prompt handler and we are proceding with our task",
-        "user_choice_no":"Enter your choice (eg:- 1,2,3):-",
+        "user_choice_no":"Enter your choice (eg:- 1,2,3):- ",
         "vlan_configuration_permission":"Do you want to make configuration in Vlan (Yes/No):-",
         "vlan_starting_range":"Enter your vlan starting range:-",
         "vlan_ending_range":"Enter your vlan ending range:-",

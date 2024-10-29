@@ -1,71 +1,102 @@
-
-2024-10-29 09:05:55,917 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
-2024-10-29 09:05:55,917 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
-2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
-2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
-2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
-2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
-2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
-2024-10-29 09:05:55,982 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
-2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
-2024-10-29 09:05:55,982 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
-2024-10-29 09:05:55,982 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
-2024-10-29 09:05:55,982 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
-2024-10-29 09:05:55,983 - Netmiko_Logger - INFO - Valid device details[]
-2024-10-29 09:05:55,983 - Netmiko_Logger - INFO - Valid device details[]
-2024-10-29 09:07:22,512 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
-2024-10-29 09:07:22,512 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
-2024-10-29 09:07:33,531 - Netmiko_Logger - ERROR - Ping to 192.168.1.125 failed with return code 2.
-2024-10-29 09:07:33,531 - Netmiko_Logger - ERROR - Ping to 192.168.1.125 failed with return code 2.
-2024-10-29 09:07:44,550 - Netmiko_Logger - ERROR - Ping to 192.168.1.100 failed with return code 2.
-2024-10-29 09:07:44,550 - Netmiko_Logger - ERROR - Ping to 192.168.1.100 failed with return code 2.
-2024-10-29 09:07:55,568 - Netmiko_Logger - ERROR - Ping to 192.168.1.105 failed with return code 2.
-2024-10-29 09:07:55,568 - Netmiko_Logger - ERROR - Ping to 192.168.1.105 failed with return code 2.
-2024-10-29 09:08:06,585 - Netmiko_Logger - ERROR - Ping to 192.168.1.115 failed with return code 2.
-2024-10-29 09:08:06,585 - Netmiko_Logger - ERROR - Ping to 192.168.1.115 failed with return code 2.
-2024-10-29 09:08:17,600 - Netmiko_Logger - ERROR - Ping to 192.168.1.60 failed with return code 2.
-2024-10-29 09:08:17,600 - Netmiko_Logger - ERROR - Ping to 192.168.1.60 failed with return code 2.
-2024-10-29 09:08:17,601 - Netmiko_Logger - INFO - Valid device details[]
-2024-10-29 09:08:17,601 - Netmiko_Logger - INFO - Valid device details[]
-2024-10-29 09:08:48,406 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
-2024-10-29 09:08:48,406 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
-2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
-2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
-2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
-2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
-2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
-2024-10-29 09:08:49,080 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
-2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
-2024-10-29 09:08:49,080 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
-2024-10-29 09:08:49,080 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
-2024-10-29 09:08:49,080 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
-2024-10-29 09:08:49,081 - Netmiko_Logger - INFO - Valid device details[]
-2024-10-29 09:08:49,081 - Netmiko_Logger - INFO - Valid device details[]
-2024-10-29 09:12:47,256 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
-2024-10-29 09:12:47,256 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
-2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
-2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
-2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
-2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
-2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
-2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
-2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
-2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
-2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
-2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
-2024-10-29 09:12:47,313 - Netmiko_Logger - INFO - Valid device details[]
-2024-10-29 09:12:47,313 - Netmiko_Logger - INFO - Valid device details[]
-2024-10-29 09:14:00,126 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
-2024-10-29 09:14:00,126 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
-2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
-2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
-2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
-2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
-2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
-2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
-2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
-2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
-2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
-2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
-2024-10-29 09:14:00,176 - Netmiko_Logger - INFO - Valid device details[]
-2024-10-29 09:14:00,176 - Netmiko_Logger - INFO - Valid device details[]
+2024-10-29 12:29:20,400 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:29:20,400 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:29:20,401 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:29:20,401 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:29:20,402 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:29:20,402 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:29:57,184 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:29:57,184 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:29:57,184 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:29:57,184 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:29:58,396 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:29:58,396 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:30:26,490 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:30:26,490 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:30:26,491 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:30:26,491 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:30:27,166 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:30:27,166 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:32:07,392 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:32:07,392 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:32:07,393 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:32:07,393 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:32:08,420 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:32:08,420 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:33:06,567 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:33:06,567 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:33:06,568 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:33:06,568 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:33:07,618 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:33:07,618 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:33:34,843 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:33:34,843 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:33:34,844 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:33:34,844 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:33:35,678 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:33:35,678 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:34:29,795 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:34:29,795 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:34:29,795 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:34:29,795 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:34:30,805 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:34:30,805 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:38:02,554 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:38:02,554 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:38:02,554 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:38:02,554 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:38:03,149 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:38:03,149 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:40:54,451 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:40:54,451 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:40:54,451 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:40:54,451 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:40:54,452 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:40:54,452 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:42:22,841 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:42:22,841 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:42:22,842 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:42:22,842 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:42:24,151 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:42:24,151 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:45:13,930 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:45:13,930 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:45:13,931 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:45:13,931 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:45:15,331 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:45:15,331 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:46:15,909 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:46:15,909 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:46:15,910 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:46:15,910 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:46:18,689 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:46:18,689 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:47:16,759 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:47:16,759 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:47:16,760 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:47:16,760 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:47:19,091 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:47:19,091 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:48:59,673 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:48:59,673 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:48:59,673 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:48:59,673 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:49:00,603 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:49:00,603 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:49:57,870 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:49:57,870 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:49:57,871 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:49:57,871 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:49:58,728 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:49:58,728 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:50:28,510 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:50:28,510 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:50:28,511 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:50:28,511 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:50:29,947 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:50:29,947 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:55:34,983 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:55:34,983 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
+2024-10-29 12:55:34,983 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:55:34,983 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
+2024-10-29 12:55:36,662 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]
+2024-10-29 12:55:36,662 - Netmiko_Logger - INFO - Valid device details[('192.168.1.60', True), ('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True)]

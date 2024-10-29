@@ -81,7 +81,7 @@ class Common_Function:
                 device.get('port', None)  # Using .get() for safety
             ])
         
-        print(tabulate(devices_list, headers=device_header, tablefmt='grid'))
+        Text_Style.common_text(primary_text=tabulate(devices_list, headers=device_header, tablefmt='grid'),primary_text_color="green")
 
     @NetmikoException_Handler
     def backup_device(self, netmiko_session: object):
@@ -113,6 +113,28 @@ class Common_Function:
         else:
             print(f"Backup failed. File was not created at {file_path}")
             return True
+    
+    def device_config_output(self,config_output:str,host_details):
+        '''
+        This method is designed for storing the configuration of the device with their respective files.
+        '''
+        absolute_path = os.path.dirname(os.path.abspath(__file__))
+        device_config_path = os.path.join(absolute_path,'netmiko_results')
+
+        os.makedirs(device_config_path,exist_ok=True)   ##Check either folder exist or not
+
+        file_name = f"{host_details}_Command_Output.txt"
+
+        final_path = os.path.join(device_config_path,file_name)     ##Joining the folder path with file name
+
+        with open(final_path,'r') as file:
+            file.write(config_output)
+        
+        if os.path.exists(final_path):
+            self.logging.info(f"Device{host_details}_Command_Output File have been Created Succesfully")
+        else:
+            self.logging.error(f"Backup failed. File was not created at {final_path}")
+
 
     @Regular_Exception_Handler
     def __remove_session(self,host:AnyStr)->None:
@@ -199,11 +221,17 @@ class Common_Function:
         Validate the command output to determine if the command is valid for the device.
         '''
         with self.customlocker: 
+            custom_pattern = r'^% .+:\s+"[^"]+"'  # Pattern to match invalid command output
             if isinstance(command_output, list):            ##If the output is list
-                return command_output
-            
+                for output in command_output:
+                    device_output = re.search(custom_pattern,output)    
+                    if device_output:       ##If the pattern match
+                        self.logging.error(f"The command '{command}' is not valid on device '{session.host}'. Please check the command.")
+                    else:           ##If pattern doesn;t Match
+                        return f"The output of the command {command} host {session.host} is:\n{command_output}"
+
             elif isinstance(command_output, str):
-                custom_pattern = r'^% .+:\s+"[^"]+"'  # Pattern to match invalid command output
+                
                 device_output = re.search(custom_pattern, command_output)
                 
                 if device_output:       ##If pattern Match 
@@ -234,8 +262,10 @@ class Common_Function:
         '''
         Method to rener the display menu on the console.
         '''
+        print("\n")
+        Text_Style.common_text(primary_text=Text_File.common_text["menu"],primary_text_color="green",secondary_text="\n\n")
         for no,items in enumerate(menu_items,start=1):
-            Text_Style.common_text(primary_text=str(no),secondary_text=items['menu_name'])
+            Text_Style.common_text(primary_text=str(no),secondary_text=items['menu_name'],secondary_text_color="dark_orange3")
     
     @Regular_Exception_Handler
     def file_path_specifier(self,file_path:str):
@@ -252,14 +282,15 @@ class Common_Function:
         '''
         c_start = 0
         c_end = 3
-        while c_start < c_end:
-            user_event_choice = input(Text_Style.common_text(primary_text=Text_File.common_text['user_choice_no'])).strip()
-            if user_event_choice in self.event_handler:             ##Validate either user event is presented in the event handler or not
-                self.event_handler.get(user_event_choice)()     
+        print("\n")
+        while c_start < c_end:     
+            user_event_choice = input(Text_Style.common_text(primary_text=Text_File.common_text['user_choice_no'],add_line_break=False,primary_text_color="bright_blue")).strip()
+            if user_event_choice in event_handler:             ##Validate either user event is presented in the event handler or not
+                event_handler.get(user_event_choice)(self.netmiko_sessions)     
             else:
                 Text_Style.ExceptionTextFormatter(primary_text=Text_File.error_text['menu_wrong_input'])
                 c_start += 1            ##increasing the counter    
-        self.default_handler()    
+        default_handler()    
 
     def jinja_environment_specifier(template_name: str):
         '''

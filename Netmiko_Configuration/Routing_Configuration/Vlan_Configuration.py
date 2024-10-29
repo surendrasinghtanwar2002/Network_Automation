@@ -1,11 +1,12 @@
 from components.exception_handler import NetmikoException_Handler,Regular_Exception_Handler
 from components.common_function import Common_Function
 from assets.text_file import Text_File
-from components.get_network_menu_items import vlan_menu_items,Modify_Vlan_Configuration_menu_items
+from components.get_network_menu_items import vlan_menu_items
 from assets.text_style import Text_Style
 from tabulate import tabulate
 from typing import List
 from sys import exit
+from time import sleep
 import csv
 import os
 
@@ -21,14 +22,16 @@ class Routing_Configuration(Common_Function):
         }
 
     @NetmikoException_Handler
-    def vlan_modification(self,session:object,device_config_data:List):
-        '''This method will modify the vlan details according to the filtered data
+    def vlan_modification(self,netmiko_session:object,device_config_data:List):
+        '''This method will pass the template with configuration command and execute task one by one.
         '''
         template = self.jinja_environment_specifier(template_name='vlan_config_template.txt')                  ##This method will create the jinja enviroment and load the template for the configuration.
         configuration_command = template.module.vlan_configuration(device_details=device_config_data)
-        command_output = session.send_config_set(configuration_command)
+        command_output = netmiko_session.send_config_set(configuration_command)
         print(f"This is the output of the command output ------------> {command_output} <---------")
-        command_output += session.save_config()     ##This will save the configuration
+        command_output += netmiko_session.save_config()     ##This will save the configuration
+        self.device_config_output(config_output=command_output,host_details=netmiko_session.host)   ##This will store the config output
+        
 
     @NetmikoException_Handler
     def device_configuration(self,session:object,device_config_data:List):
@@ -59,10 +62,8 @@ class Routing_Configuration(Common_Function):
               if device_config['delete_vlan']:
                   device_config['delete_vlan'] = list(filter(lambda x: x in current_vlan_id,device_config['create_vlan']))
 
-        
+              self.vlan_modification(netmiko_session=session,device_config_data=device_config)      ##Calling the vlan modification method and passing filtered device data.
            else:
-              if device_config['device_ip'] not in session.host:
-                  print(f"")
               print(f"No there is no config for the host {session.host}")    
 
     def Modify_Vlan_Configuration(self):
@@ -85,38 +86,39 @@ class Routing_Configuration(Common_Function):
         self.logging.error(f"{Text_File.error_text['limit_exceed']}in Class {__name__}") 
         exit(Text_Style.ExceptionTextFormatter(primary_text=Text_File.error_text['limit_exceed']))      ##If user have reached the limit script will be closed.
 
-    @NetmikoException_Handler
     def display_vlan_information(self, session: object, command="show vlan"):
         '''
         Method to display_vlan_information.
         '''
+        print(f"This is the data received in the display vlan information -----> {session} <-----------")
         # Displaying command execution attempt
-        Text_Style.common_text(primary_text=Text_File.common_text['command_execution_try'], secondary_text=session.host)
+        Text_Style.common_text(primary_text=Text_File.common_text['command_execution_try'], secondary_text= [item.host for item in session] if isinstance(session, list) else [session.host])
         
         # Sending command to the session
-        output = session.send_command(command,use_textfsm=True)
-           
+        output = [netmikosession.send_command(command,use_textfsm=True) for netmikosession in session] if isinstance(session,list) else session.send_command(command,use_textfsm=True)
+
         # Validating the command output
         command_validation_output = self.run_command_validation(session=session, command_output=output, command=command)
         
-        if command_validation_output:
-            # Prepare table headers and data
-            vlan_header = ['Vlan_Id', 'Vlan_Name', 'Status', 'Interfaces']
-            vlan_data = [ ]  # This list will hold VLAN data details    
-            if isinstance(command_validation_output, list):
-                for vlan in command_validation_output:
-                    vlan_data.append([
-                        vlan['vlan_id'],
-                        vlan['vlan_name'],
-                        vlan['status'],
-                        vlan['interfaces']
-                    ])
-                Text_Style.common_text(primary_text=Text_File.common_text['device_output'],secondary_text={session.host})
-                Text_Style.common_text(primary_text=tabulate(vlan_data, headers=vlan_header, tablefmt='grid'))
-            else:
-                Text_Style.common_text(primary_text=command_validation_output)  # If not a list, print the returned validation output directly
-        else:
-            Text_Style.ExceptionTextFormatter(primary_text=Text_File.error_text['command_failed'])
+        print(f"This the output of the command validation output ------> {command_validation_output} <-------------")
+        # if command_validation_output:
+        #     # Prepare table headers and data
+        #     vlan_header = ['Vlan_Id', 'Vlan_Name', 'Status', 'Interfaces']
+        #     vlan_data = [ ]  # This list will hold VLAN data details    
+        #     if isinstance(command_validation_output, list):
+        #         for vlan in command_validation_output:
+        #             vlan_data.append([
+        #                 vlan['vlan_id'],
+        #                 vlan['vlan_name'],
+        #                 vlan['status'],
+        #                 vlan['interfaces']
+        #             ])
+        #         Text_Style.common_text(primary_text=Text_File.common_text['device_output'],secondary_text={session.host})
+        #         Text_Style.common_text(primary_text=tabulate(vlan_data, headers=vlan_header, tablefmt='grid'))
+        #     else:
+        #         Text_Style.common_text(primary_text=command_validation_output)  # If not a list, print the returned validation output directly
+        # else:
+        #     Text_Style.ExceptionTextFormatter(primary_text=Text_File.error_text['command_failed'])
     
     @Regular_Exception_Handler
     def read_device_configuration(self):
@@ -151,25 +153,24 @@ class Routing_Configuration(Common_Function):
         '''
         valid_device_details = self.device_details_generator(device_details_file="device_details.csv")     
        
-        print(f"This the vlan device details of the device details generator -------------------> {valid_device_details} <--------------") ##used for debug purpose
         netmiko_connection_list = self.threaded_device_connection_executor(
             iterable_items=valid_device_details,
             function_name=self.initiate_netmiko_session
         )
-
-        print(f"This is the netmiko connection object recieved from the netmiko connection list ---------> {netmiko_connection_list} <--------------")
         self.valid_device_filteration(netmiko_connection_list)  # Update with valid sessions only
         
         output = self.multi_device_prompt_manager()
-        print(f"This is the output of the multi device_prompt manager ----------> {output} <-------------")
         self.logging.info(f"{Text_File.common_text['valid_devices']}{output}")
-        # self.clear_screen()  # Clear the screen
+        print(f"Wait Extracting data from the given file......")
+        sleep(2)            ## 2 second delay 
+        self.clear_screen()  # Clear the screen
         self.display_device_info(valid_device_details)
-       
+        print(f"\n")
+        Text_Style.common_text(primary_text=Text_File.common_text["valid_privileged_device"], primary_text_color="hot_pink3")
         header = ["Host", "Privileged EXEC Mode Status"]        
-        Text_Style.common_text(primary_text=tabulate(output, header, tablefmt='grid'),primary_text_color="red")        ##print the valid host which are in priviledged exec mode.    
-        # self.display_menu(menu_items=self.vlan_menu_items)
-        # self.check_user_choice(event_handler=self.event_handler,default_handler=self.default_function)         ##Checking user choice from the list.
+        Text_Style.common_text(primary_text=tabulate(output, header, tablefmt='grid'),primary_text_color="hot_pink3")        ##print the valid host which are in priviledged exec mode.    
+        self.display_menu(menu_items=self.vlan_menu_items)
+        self.check_user_choice(event_handler=self.main_menu_event_handler,default_handler=self.default_function)         ##Checking user choice from the list.
 
 if __name__ == "__main__":
     r1 = Routing_Configuration()
