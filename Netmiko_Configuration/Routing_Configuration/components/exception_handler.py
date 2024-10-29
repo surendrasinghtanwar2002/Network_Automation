@@ -23,7 +23,7 @@ def custom_logger(logger_level=logging.INFO)->object:
 
 logger = custom_logger()
 
-def NetmikoException_Handler(method: any):
+def NetmikoException_Handler(method: any):                              ## Not being used but sill have been reserved for some improvement.
     """
     Handles all Netmiko and Paramiko exceptions.
 
@@ -122,6 +122,8 @@ def Regular_Exception_Handler(method: any):
             Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text['key_error'],secondary_text=keyerror)
         except re.error as e:
             Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text['regex_Exception'],secondary_text=e,secondary_text_style='bold')
+        except AttributeError as attrib:
+            Text_Style.ExceptionTextFormatter(primary_text=Text_File.exception_text['Attribute_error'],secondary_text=attrib)
     return wrapper
 
 def ThreadPoolExeceptionHandler(method):

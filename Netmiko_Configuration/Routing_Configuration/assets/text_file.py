@@ -97,7 +97,8 @@ class Text_File:
         "Module_error":"Module not found please check it",
         "sub_process_exception":"The sub process module have occured a exception please check it",
         "File_Creation_Max_Limit":"We have reached our limit to create the file but file is not being created",
-        "IOerror":"Error occurred while accessing the file. Please check the file path and permissions"
+        "IOerror":"Error occurred while accessing the file. Please check the file path and permissions",
+        "Attribute_error":"Attribute occured due to invalid value."
     }
     #threadpool module exception text
     threadpool_module_exception_text = {

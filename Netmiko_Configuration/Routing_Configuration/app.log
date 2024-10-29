@@ -1,54 +1,71 @@
-2024-10-26 12:13:58,150 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:13:58,150 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:14:02,132 - Netmiko_Logger - ERROR - Ping to 192.168.1.115 failed with return code 1.
-2024-10-26 12:14:02,132 - Netmiko_Logger - ERROR - Ping to 192.168.1.115 failed with return code 1.
-2024-10-26 12:14:24,135 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:14:24,135 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:14:28,133 - Netmiko_Logger - ERROR - Ping to 192.168.1.125 failed with return code 1.
-2024-10-26 12:14:28,133 - Netmiko_Logger - ERROR - Ping to 192.168.1.125 failed with return code 1.
-2024-10-26 12:15:05,136 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:15:05,136 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:15:47,634 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:15:47,634 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:16:10,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:16:10,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:16:32,131 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:16:32,131 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:17:42,474 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:17:42,474 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:18:59,651 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:18:59,651 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:19:26,141 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:19:26,141 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:19:38,630 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:19:38,630 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:20:42,629 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:20:42,629 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:21:21,640 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:21:21,640 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:22:47,134 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:22:47,134 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:23:12,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:23:12,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:23:42,632 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:23:42,632 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:23:46,628 - Netmiko_Logger - ERROR - Ping to 192.168.1.100 failed with return code 1.
-2024-10-26 12:23:46,628 - Netmiko_Logger - ERROR - Ping to 192.168.1.100 failed with return code 1.
-2024-10-26 12:23:50,629 - Netmiko_Logger - ERROR - Ping to 192.168.1.60 failed with return code 1.
-2024-10-26 12:23:50,629 - Netmiko_Logger - ERROR - Ping to 192.168.1.60 failed with return code 1.
-2024-10-26 12:24:43,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:24:43,132 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:25:44,637 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:25:44,637 - Netmiko_Logger - ERROR - Device is unreachable 192.168.1.120
-2024-10-26 12:25:56,686 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
-2024-10-26 12:25:56,686 - Netmiko_Logger - ERROR - Failed to enter enable mode for 192.168.1.100: Failed to enter enable mode. Please ensure you pass the 'secret' argument to ConnectHandler.
-2024-10-26 12:25:56,687 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
-2024-10-26 12:25:56,687 - Netmiko_Logger - INFO - Removing invalid session from the netmiko object list 192.168.1.100
-2024-10-26 12:26:03,003 - Netmiko_Logger - INFO - Valid device details[('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.60', True)]
-2024-10-26 12:26:03,003 - Netmiko_Logger - INFO - Valid device details[('192.168.1.125', True), ('192.168.1.105', True), ('192.168.1.115', True), ('192.168.1.60', True)]
-2024-10-26 12:26:03,715 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.115'. Please check the command.
-2024-10-26 12:26:03,715 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.115'. Please check the command.
-2024-10-26 12:26:03,717 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.105'. Please check the command.
-2024-10-26 12:26:03,717 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.105'. Please check the command.
-2024-10-26 12:26:03,719 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.125'. Please check the command.
-2024-10-26 12:26:03,719 - Netmiko_Logger - ERROR - The command 'show vlan' is not valid on device '192.168.1.125'. Please check the command.
+
+2024-10-29 09:05:55,917 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
+2024-10-29 09:05:55,917 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
+2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
+2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
+2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
+2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
+2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
+2024-10-29 09:05:55,982 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
+2024-10-29 09:05:55,981 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
+2024-10-29 09:05:55,982 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
+2024-10-29 09:05:55,982 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
+2024-10-29 09:05:55,982 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
+2024-10-29 09:05:55,983 - Netmiko_Logger - INFO - Valid device details[]
+2024-10-29 09:05:55,983 - Netmiko_Logger - INFO - Valid device details[]
+2024-10-29 09:07:22,512 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
+2024-10-29 09:07:22,512 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
+2024-10-29 09:07:33,531 - Netmiko_Logger - ERROR - Ping to 192.168.1.125 failed with return code 2.
+2024-10-29 09:07:33,531 - Netmiko_Logger - ERROR - Ping to 192.168.1.125 failed with return code 2.
+2024-10-29 09:07:44,550 - Netmiko_Logger - ERROR - Ping to 192.168.1.100 failed with return code 2.
+2024-10-29 09:07:44,550 - Netmiko_Logger - ERROR - Ping to 192.168.1.100 failed with return code 2.
+2024-10-29 09:07:55,568 - Netmiko_Logger - ERROR - Ping to 192.168.1.105 failed with return code 2.
+2024-10-29 09:07:55,568 - Netmiko_Logger - ERROR - Ping to 192.168.1.105 failed with return code 2.
+2024-10-29 09:08:06,585 - Netmiko_Logger - ERROR - Ping to 192.168.1.115 failed with return code 2.
+2024-10-29 09:08:06,585 - Netmiko_Logger - ERROR - Ping to 192.168.1.115 failed with return code 2.
+2024-10-29 09:08:17,600 - Netmiko_Logger - ERROR - Ping to 192.168.1.60 failed with return code 2.
+2024-10-29 09:08:17,600 - Netmiko_Logger - ERROR - Ping to 192.168.1.60 failed with return code 2.
+2024-10-29 09:08:17,601 - Netmiko_Logger - INFO - Valid device details[]
+2024-10-29 09:08:17,601 - Netmiko_Logger - INFO - Valid device details[]
+2024-10-29 09:08:48,406 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
+2024-10-29 09:08:48,406 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
+2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
+2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
+2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
+2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
+2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
+2024-10-29 09:08:49,080 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
+2024-10-29 09:08:49,079 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
+2024-10-29 09:08:49,080 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
+2024-10-29 09:08:49,080 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
+2024-10-29 09:08:49,080 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
+2024-10-29 09:08:49,081 - Netmiko_Logger - INFO - Valid device details[]
+2024-10-29 09:08:49,081 - Netmiko_Logger - INFO - Valid device details[]
+2024-10-29 09:12:47,256 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
+2024-10-29 09:12:47,256 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
+2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
+2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
+2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
+2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
+2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
+2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
+2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
+2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
+2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
+2024-10-29 09:12:47,311 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
+2024-10-29 09:12:47,313 - Netmiko_Logger - INFO - Valid device details[]
+2024-10-29 09:12:47,313 - Netmiko_Logger - INFO - Valid device details[]
+2024-10-29 09:14:00,126 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
+2024-10-29 09:14:00,126 - Netmiko_Logger - ERROR - Ping to 192.168.1.120 failed with return code 2.
+2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
+2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.125
+2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
+2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.115
+2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
+2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.105
+2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
+2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
+2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.100
+2024-10-29 09:14:00,174 - Netmiko_Logger - ERROR - Connection to the device:-  on host 192.168.1.60
+2024-10-29 09:14:00,176 - Netmiko_Logger - INFO - Valid device details[]
+2024-10-29 09:14:00,176 - Netmiko_Logger - INFO - Valid device details[]

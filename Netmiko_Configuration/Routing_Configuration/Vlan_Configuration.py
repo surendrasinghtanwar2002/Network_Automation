@@ -1,8 +1,7 @@
+from components.exception_handler import NetmikoException_Handler,Regular_Exception_Handler
 from components.common_function import Common_Function
-from components.exception_handler import NetmikoException_Handler,ThreadPoolExeceptionHandler,Regular_Exception_Handler
 from assets.text_file import Text_File
-from components.get_network_menu_items import vlan_menu_items
-
+from components.get_network_menu_items import vlan_menu_items,Modify_Vlan_Configuration_menu_items
 from assets.text_style import Text_Style
 from tabulate import tabulate
 from typing import List
@@ -15,42 +14,66 @@ class Routing_Configuration(Common_Function):
         
         super().__init__()  # Correctly calling the parent class constructor
         self.vlan_menu_items = vlan_menu_items
-        self.event_handler = {                          ##This will manage the event handler
+        self.main_menu_event_handler = {                          ##This will manage the event handler
             "1": self.display_vlan_information,
             "2": self.Modify_Vlan_Configuration,
             "3": self.vlan_health_status,         
         }
 
+    @NetmikoException_Handler
+    def vlan_modification(self,session:object,device_config_data:List):
+        '''This method will modify the vlan details according to the filtered data
+        '''
+        template = self.jinja_environment_specifier(template_name='vlan_config_template.txt')                  ##This method will create the jinja enviroment and load the template for the configuration.
+        configuration_command = template.module.vlan_configuration(device_details=device_config_data)
+        command_output = session.send_config_set(configuration_command)
+        print(f"This is the output of the command output ------------> {command_output} <---------")
+        command_output += session.save_config()     ##This will save the configuration
+
+    @NetmikoException_Handler
     def device_configuration(self,session:object,device_config_data:List):
         '''
         Method which will configure the device with the specific configuration given in csv file
         '''
+
+        backup_result = self.backup_device(netmiko_session=session)     ##backup the device before commiting any changes
+        if backup_result():
+            self.logging.info(f"Backup of the device {session.host} is Succesfull")
+        else:
+            self.logging.error(f"Backup of the host {session.host} is Unsuccesfull")
+
         for device_config in device_config_data:
            if device_config['device_ip'] in session.host:
-            print(f"Your configuration for the host {device_config['device_ip']} will be performed.")
-            current_vlan = session.send_command("show vlan", use_textfsm=True)  # Output will be in the list
+              print(f"Yes device_config has some changes for the host {session.host}")
+              
+              device_vlan_info = session.send_command("show vlan",use_textfsm=True)        ##Command sending to the device
+              
+            #  "This method have given the current vlan information of the device"
+              current_vlan_id = [vlan['vlan_id'] for vlan in device_vlan_info]
+
+             ##This will check the configuration vlan details with the existing device and filter those vlan which are already presented
+              if device_config['create_vlan']:                  
+                  device_config['create_vlan']=list(filter(lambda x: x not in current_vlan_id,device_config['create_vlan']))
             
-            current_vlan_ids = {vlan['vlan_id'] for vlan in current_vlan}  # Adjust based on actual output structure
-            
-            print(f"This is the output of the command \n {current_vlan}")
-            
-            if any(vlan in current_vlan_ids for vlan in device_config['create_vlan']):
-                print("If the VLAN is present in the current VLAN, then the Jinja templating will be applicable.")
-            else:
-                print("If the VLAN is not in the current VLAN, then the Jinja templating will be applicable.")
-        else:
-            print(f"You have not passed the configuration details for the specific host {device_config['device_ip']}.")
+            ##This will check the configuration vlan details with the existing device and filter those vlan which are not presneted
+              if device_config['delete_vlan']:
+                  device_config['delete_vlan'] = list(filter(lambda x: x in current_vlan_id,device_config['create_vlan']))
+
+        
+           else:
+              if device_config['device_ip'] not in session.host:
+                  print(f"")
+              print(f"No there is no config for the host {session.host}")    
 
     def Modify_Vlan_Configuration(self):
         '''
         Method to modify the vlan configuration
         '''
-        device_config_data = self.read_device_configuration()
+        device_config_data = self.read_device_configuration()           ##Method will extract all information from the csv
         print(f"This is the device configuration data --------------> \n{device_config_data} <--------------")          ## this data is list
-        template = self.jinja_environment_specifier(template_name='vlan_config_template.txt')                  ##This method will create the jinja enviroment and load the template for the configuration.
-        print(f"This the template provided by the function -----------------------> \n{template} <---------------")
+        # 
 
-        ##################  3333333 Need to work on this area where vlan configuration is still not achieved ####################
+        ##This method will call the thread and call the validate_vlan_changes before implementing anything on the device
         configuration_details  = self.threaded_device_connection_executor(iterable_items=self.netmiko_sessions,function_name=self.device_configuration)
         print(f"This will give the output of the configuration details of the function------------> {configuration_details} <-------------")
     
@@ -127,22 +150,26 @@ class Routing_Configuration(Common_Function):
         Method to connect to devices and manage device prompts.
         '''
         valid_device_details = self.device_details_generator(device_details_file="device_details.csv")     
-        self.display_device_info(valid_device_details)
        
+        print(f"This the vlan device details of the device details generator -------------------> {valid_device_details} <--------------") ##used for debug purpose
         netmiko_connection_list = self.threaded_device_connection_executor(
             iterable_items=valid_device_details,
             function_name=self.initiate_netmiko_session
         )
+
+        print(f"This is the netmiko connection object recieved from the netmiko connection list ---------> {netmiko_connection_list} <--------------")
         self.valid_device_filteration(netmiko_connection_list)  # Update with valid sessions only
         
         output = self.multi_device_prompt_manager()
+        print(f"This is the output of the multi device_prompt manager ----------> {output} <-------------")
         self.logging.info(f"{Text_File.common_text['valid_devices']}{output}")
-        
-        self.clear_screen()  # Clear the screen
+        # self.clear_screen()  # Clear the screen
+        self.display_device_info(valid_device_details)
+       
         header = ["Host", "Privileged EXEC Mode Status"]        
         Text_Style.common_text(primary_text=tabulate(output, header, tablefmt='grid'),primary_text_color="red")        ##print the valid host which are in priviledged exec mode.    
-        self.display_menu(menu_items=self.vlan_menu_items)
-        self.check_user_choice(event_handler=self.event_handler,default_function=self.default_function)         ##Checking user choice from the list.
+        # self.display_menu(menu_items=self.vlan_menu_items)
+        # self.check_user_choice(event_handler=self.event_handler,default_handler=self.default_function)         ##Checking user choice from the list.
 
 if __name__ == "__main__":
     r1 = Routing_Configuration()

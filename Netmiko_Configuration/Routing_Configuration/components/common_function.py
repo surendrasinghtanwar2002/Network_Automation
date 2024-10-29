@@ -4,8 +4,9 @@ from concurrent.futures import ThreadPoolExecutor
 from jinja2 import Environment,FileSystemLoader
 from assets.text_style import Text_Style
 from assets.text_file import Text_File
-from netmiko import ConnectHandler
+from netmiko import ConnectHandler,NetmikoTimeoutException,NetmikoBaseException,NetmikoAuthenticationException,ConnectionException
 from tabulate import tabulate
+from datetime import datetime
 import subprocess
 import threading
 import platform 
@@ -81,6 +82,37 @@ class Common_Function:
             ])
         
         print(tabulate(devices_list, headers=device_header, tablefmt='grid'))
+
+    @NetmikoException_Handler
+    def backup_device(self, netmiko_session: object):
+        '''
+        Method to backup the device before implementing any configuration to the device.
+        '''
+        current_absolute_path = os.path.dirname(os.path.abspath(__file__))
+        device_backup_path = os.path.join(current_absolute_path, 'device_backup')
+        
+        os.makedirs(device_backup_path, exist_ok=True)      ##Check either folder exist or not
+        
+        # Format the filename with the host and current date/time
+        current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        file_name = f"{netmiko_session.host}_{current_datetime}.txt"
+        file_path = os.path.join(device_backup_path, file_name)
+        
+        # Retrieve the device configuration
+        device_running_configuration = netmiko_session.send_command("show run")
+        
+        # Write the configuration to the file in the backup directory
+        with open(file_path, 'w') as file:
+            file.write(f"Backup of the device: {netmiko_session.host}\n")
+            file.write(f"{device_running_configuration}\n")
+        
+        # Check if the backup file exists at the specified path
+        if os.path.exists(file_path):
+            print(f"Backup was successful! File saved at {file_path}")
+            return True
+        else:
+            print(f"Backup failed. File was not created at {file_path}")
+            return True
 
     @Regular_Exception_Handler
     def __remove_session(self,host:AnyStr)->None:
@@ -203,7 +235,7 @@ class Common_Function:
         Method to rener the display menu on the console.
         '''
         for no,items in enumerate(menu_items,start=1):
-            Text_Style.common_text(primary_text=no,secondary_text=items['menu_name'])
+            Text_Style.common_text(primary_text=str(no),secondary_text=items['menu_name'])
     
     @Regular_Exception_Handler
     def file_path_specifier(self,file_path:str):
@@ -214,7 +246,7 @@ class Common_Function:
         return config_file_path
     
     @Regular_Exception_Handler
-    def check_user_choice(self,event_handler:List,default_handler:callable[any])->None:
+    def check_user_choice(self,event_handler:List,default_handler:callable)->None:
         '''
         Method to check the user choice from the event handler
         '''
@@ -243,18 +275,47 @@ class Common_Function:
 
         return template         ##return the jinja template
     
-    @NetmikoException_Handler
     def initiate_netmiko_session(self,device_details)->object:
         '''
         Method to make the netmiko session using ConnectHandler Method
         '''
         Text_Style.common_text(primary_text=Text_File.common_text['host_connecting'],secondary_text=device_details['ip'])
-        session = ConnectHandler(**device_details)
-        if session:
-            Text_Style.common_text(primary_text=Text_File.common_text['connected_host'],secondary_text=session.host,secondary_text_color="green")
-            return session
-        else:
+
+        try:
+            session = ConnectHandler(**device_details)
+            if session:
+                Text_Style.common_text(primary_text=Text_File.common_text['connected_host'],secondary_text=session.host,secondary_text_color="green")
+                return session
+            else:
+                self.logging.error(f'{Text_File.error_text['connection_failed']} on host {device_details['ip']}')
+        except NetmikoTimeoutException:
             self.logging.error(f'{Text_File.error_text['connection_failed']} on host {device_details['ip']}')
+            Text_Style.common_text(
+                primary_text=Text_File.exception_text["Netmiko_Timeout_Exception"],
+                secondary_text=__name__
+            )
+            return False
+        except NetmikoBaseException:
+            self.logging.error(f'{Text_File.error_text['connection_failed']} on host {device_details['ip']}')
+            Text_Style.common_text(
+                primary_text=Text_File.exception_text["Netmiko_Base_Exception"],
+                secondary_text=__name__
+            )
+            return False
+        except NetmikoAuthenticationException:
+            self.logging.error(f'{Text_File.error_text['connection_failed']} on host {device_details['ip']}')
+            Text_Style.common_text(
+                primary_text=Text_File.exception_text["Netmiko_Authentication_exception"],
+                secondary_text=__name__
+            )
+            return False
+        except ConnectionException:
+            self.logging.error(f'{Text_File.error_text['connection_failed']} on host {device_details['ip']}')
+            Text_Style.common_text(
+                primary_text=Text_File.exception_text["ssh_exception"],
+                secondary_text=__name__
+            )
+            return False        
     
     @ThreadPoolExeceptionHandler
     def threaded_device_connection_executor(self,iterable_items:List,function_name=Callable[['str'],Any])->List:
