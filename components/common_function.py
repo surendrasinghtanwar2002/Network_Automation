@@ -141,7 +141,7 @@ class Common_Function:
         '''
         Method to remove the session which is not in Priviledge Exec Mode
         '''
-        self.netmiko_sessions = [session for session in self.netmiko_sessions if session.host != host]
+        self.netmiko_sessions = [session for session in self.netmiko_sessions if session.host != host] ## Remove the existing netmiko object.
         self.logging.info(f"{Text_File.error_text['removing_invalid_session']} {host}")
     
     @NetmikoException_Handler
@@ -223,22 +223,15 @@ class Common_Function:
         with self.customlocker: 
             custom_pattern = r'^% .+:\s+"[^"]+"'  # Pattern to match invalid command output
             if isinstance(command_output, list):            ##If the output is list
-                for output in command_output:
-                    device_output = re.search(custom_pattern,output)    
-                    if device_output:       ##If the pattern match
-                        self.logging.error(f"The command '{command}' is not valid on device '{session.host}'. Please check the command.")
-                    else:           ##If pattern doesn;t Match
-                        return f"The output of the command {command} host {session.host} is:\n{command_output}"
-
-            elif isinstance(command_output, str):
-                
-                device_output = re.search(custom_pattern, command_output)
-                
+                return (session,command_output)       ##If list return that means we have correct data.
+                    
+            elif isinstance(command_output, str):  
+                device_output = re.search(custom_pattern, command_output)  
                 if device_output:       ##If pattern Match 
                     self.logging.error(f"The command '{command}' is not valid on device '{session.host}'. Please check the command.") 
-                    return False
+                    return (session,False) ##if the pattern matches then return bool value false.
                 else:                   ## If pattern doesn;t Match
-                    return f"The output of the command {command} host {session.host} is:\n{command_output}"
+                    return (session,command_output) ##Return the tuple with session object and the command output list
                                                                                                                               
     @ThreadPoolExeceptionHandler
     def multi_device_prompt_manager(self)->List:
@@ -286,7 +279,7 @@ class Common_Function:
         while c_start < c_end:     
             user_event_choice = input(Text_Style.common_text(primary_text=Text_File.common_text['user_choice_no'],add_line_break=False,primary_text_color="bright_blue")).strip()
             if user_event_choice in event_handler:             ##Validate either user event is presented in the event handler or not
-                event_handler.get(user_event_choice)(self.netmiko_sessions)     
+                event_handler.get(user_event_choice)()     
             else:
                 Text_Style.ExceptionTextFormatter(primary_text=Text_File.error_text['menu_wrong_input'])
                 c_start += 1            ##increasing the counter    

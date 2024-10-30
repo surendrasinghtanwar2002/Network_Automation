@@ -44,7 +44,8 @@ class Routing_Configuration(Common_Function):
             self.logging.info(f"Backup of the device {session.host} is Succesfull")
         else:
             self.logging.error(f"Backup of the host {session.host} is Unsuccesfull")
-
+        
+        ##we have not passed the device config data yeat we need to to work on this functionalites.
         for device_config in device_config_data:
            if device_config['device_ip'] in session.host:
               print(f"Yes device_config has some changes for the host {session.host}")
@@ -74,7 +75,7 @@ class Routing_Configuration(Common_Function):
         print(f"This is the device configuration data --------------> \n{device_config_data} <--------------")          ## this data is list
         # 
 
-        ##This method will call the thread and call the validate_vlan_changes before implementing anything on the device
+        ### We are calling the device configratuon function from this but yeat we have not pased the device_configuration details to the function.
         configuration_details  = self.threaded_device_connection_executor(iterable_items=self.netmiko_sessions,function_name=self.device_configuration)
         print(f"This will give the output of the configuration details of the function------------> {configuration_details} <-------------")
     
@@ -86,39 +87,59 @@ class Routing_Configuration(Common_Function):
         self.logging.error(f"{Text_File.error_text['limit_exceed']}in Class {__name__}") 
         exit(Text_Style.ExceptionTextFormatter(primary_text=Text_File.error_text['limit_exceed']))      ##If user have reached the limit script will be closed.
 
-    def display_vlan_information(self, session: object, command="show vlan"):
+    def vlan_information(self,session,command="show vlan"):
+        '''
+        Method will run the command on the respective device
+        '''
+        command_output = session.send_command(command,use_textfsm= True)
+        return (command_output,session,command)         ##This will return the tuple 
+    
+    def display_vlan_information(self):
         '''
         Method to display_vlan_information.
         '''
-        print(f"This is the data received in the display vlan information -----> {session} <-----------")
         # Displaying command execution attempt
-        Text_Style.common_text(primary_text=Text_File.common_text['command_execution_try'], secondary_text= [item.host for item in session] if isinstance(session, list) else [session.host])
+        Text_Style.common_text(primary_text=Text_File.common_text['command_execution_try'], secondary_text= [item.host for item in self.netmiko_sessions] if isinstance(self.netmiko_sessions, list) else [self.netmiko_sessions.host])
         
-        # Sending command to the session
-        output = [netmikosession.send_command(command,use_textfsm=True) for netmikosession in session] if isinstance(session,list) else session.send_command(command,use_textfsm=True)
+        # Sending command to the session and using the use_text_fsm but we need to check either netmiko object is single object or multiple object
+        commands_output = self.threaded_device_connection_executor(iterable_items=self.netmiko_sessions,function_name=self.vlan_information)
+        # output = [netmikosession.send_command(command,use_textfsm=True) for netmikosession in session] if isinstance(session,list) else session.send_command(command,use_textfsm=True)
 
+        command_validation_output = []  ##This is the list which will store all the commands output
+        for commands in commands_output:
         # Validating the command output
-        command_validation_output = self.run_command_validation(session=session, command_output=output, command=command)
-        
-        print(f"This the output of the command validation output ------> {command_validation_output} <-------------")
-        # if command_validation_output:
-        #     # Prepare table headers and data
-        #     vlan_header = ['Vlan_Id', 'Vlan_Name', 'Status', 'Interfaces']
-        #     vlan_data = [ ]  # This list will hold VLAN data details    
-        #     if isinstance(command_validation_output, list):
-        #         for vlan in command_validation_output:
-        #             vlan_data.append([
-        #                 vlan['vlan_id'],
-        #                 vlan['vlan_name'],
-        #                 vlan['status'],
-        #                 vlan['interfaces']
-        #             ])
-        #         Text_Style.common_text(primary_text=Text_File.common_text['device_output'],secondary_text={session.host})
-        #         Text_Style.common_text(primary_text=tabulate(vlan_data, headers=vlan_header, tablefmt='grid'))
-        #     else:
-        #         Text_Style.common_text(primary_text=command_validation_output)  # If not a list, print the returned validation output directly
-        # else:
-        #     Text_Style.ExceptionTextFormatter(primary_text=Text_File.error_text['command_failed'])
+            command_validation_output.append(self).run_command_validation(command_output=commands[0],session=commands[1],command=commands[2])
+
+
+        ## updating the netmiko session i know this functionalities is not good but i am not able to handle the device dues to gns3 ios image i can handle this
+        ## condition already with device is switch or not but i have this option only for working with this project.
+        self.netmiko_sessions = [items[0] for items in command_validation_output if items[0] in self.netmiko_session]
+
+        #After getting the list we need to filter this list      
+        command_validation_output = list(filter(lambda x: x[1] is not False ,command_validation_output))
+
+        print(f"This is the filter list of command validation ouput -------> {command_validation_output} <----------")
+
+        if isinstance(command_validation_output,list) and command_validation_output:
+            for vlan_info in command_validation_output:
+                 # Prepare table headers and data
+                vlan_header = ['Vlan_Id', 'Vlan_Name', 'Status', 'Interfaces']
+                vlan_data = [ ]  # This list will hold VLAN data details   
+                if isinstance(vlan_info[0], list):
+                    for vlan in vlan_info:
+                        vlan_data.append([
+                            vlan['vlan_id'],
+                            vlan['vlan_name'],
+                            vlan['status'],
+                            vlan['interfaces']
+                        ])
+                    Text_Style.common_text(primary_text=Text_File.common_text['device_output'],secondary_text={vlan_info[1]})
+                    Text_Style.common_text(primary_text=tabulate(vlan_data, headers=vlan_header, tablefmt='grid'))
+            
+                else:
+                    Text_Style.common_text(primary_text=vlan_info[0])  # If not a list, print the returned validation output directly
+        else:
+            Text_Style.ExceptionTextFormatter(primary_text=Text_File.error_text['command_failed'])
     
     @Regular_Exception_Handler
     def read_device_configuration(self):
