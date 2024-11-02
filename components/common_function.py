@@ -220,6 +220,7 @@ class Common_Function:
         '''
         Validate the command output to determine if the command is valid for the device.
         '''
+        # print(f"This the output given by the server -------> \n Server name {session} server command run {command} server_command_output ---> {command_output}") ## used for the debug purpose .......
         with self.customlocker: 
             custom_pattern = r'^% .+:\s+"[^"]+"'  # Pattern to match invalid command output
             if isinstance(command_output, list):            ##If the output is list
@@ -228,7 +229,7 @@ class Common_Function:
             elif isinstance(command_output, str):  
                 device_output = re.search(custom_pattern, command_output)  
                 if device_output:       ##If pattern Match 
-                    self.logging.error(f"The command '{command}' is not valid on device '{session.host}'. Please check the command.") 
+                    self.logging.error(f"The command '{command}' is not valid on device '{session}'. Please check the command.") 
                     return (session,False) ##if the pattern matches then return bool value false.
                 else:                   ## If pattern doesn;t Match
                     return (session,command_output) ##Return the tuple with session object and the command output list
@@ -307,6 +308,7 @@ class Common_Function:
 
         try:
             session = ConnectHandler(**device_details)
+            print(f"This is the device session after the connection -------> {session} <----------")
             if session:
                 Text_Style.common_text(primary_text=Text_File.common_text['connected_host'],secondary_text=session.host,secondary_text_color="green")
                 return session
